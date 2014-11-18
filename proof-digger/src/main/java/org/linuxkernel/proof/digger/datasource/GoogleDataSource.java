@@ -33,7 +33,6 @@ import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -54,7 +53,6 @@ import org.slf4j.LoggerFactory;
 public class GoogleDataSource implements DataSource {
 
     private static final Logger LOG = LoggerFactory.getLogger(GoogleDataSource.class);
-    private String file;
     private int googleSearchTimes = 0;
     private static final int GOOGLESEARCHLIMIT = 10;
     //获取多少页

@@ -23,16 +23,16 @@
 	</licenses>
 	<inceptionYear>2014</inceptionYear>
 	<scm>
-		<url>https://github.com/ysc/QuestionAnsweringSystem</url>
-		<connection>scm:git:git://github.com/ysc/QuestionAnsweringSystem.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/ysc/QuestionAnsweringSystem.git</developerConnection>
+		<url>https://github.com/GorlJimmy/proof-digger</url>
+		<connection>scm:git:git@github.com:GorlJimmy/proof-digger.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:GorlJimmy/proof-digger.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 	<developers>
 		<developer>
-			<name>杨尚川</name>
-			<email>ysc@apdplat.org</email>
-			<url>http://yangshangchuan.iteye.com</url>
+			<name>Jimmy</name>
+			<email>gorljimmy@pku.edu.cn</email>
+			<url>http://linuxkernel.org.cn</url>
 		</developer>
 	</developers>
 

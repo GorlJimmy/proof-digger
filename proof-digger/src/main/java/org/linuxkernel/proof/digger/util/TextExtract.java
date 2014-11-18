@@ -1,23 +1,3 @@
-/**
- * 
- * APDPlat - Application Product Development Platform
- * Copyright (c) 2013, 杨尚川, yang-shangchuan@qq.com
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- */
-
 package org.linuxkernel.proof.digger.util;
 
 import java.util.ArrayList;
@@ -27,13 +7,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author 杨尚川
- */
 public class TextExtract {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TextExtract.class);
     private static List<String> lines;
     private final static int blocksWidth;
     private static int threshold;
@@ -50,8 +25,6 @@ public class TextExtract {
         text = new StringBuilder();
         blocksWidth = 3;
         flag = false;
-        /* 当待抽取的网页正文中遇到成块的新闻标题未剔除时，只要增大此阈值即可。*/
-        /* 阈值增大，准确率提升，召回率下降；值变小，噪声会大，但可以保证抽到只有一句话的正文 */
         threshold = 86;
     }
 
