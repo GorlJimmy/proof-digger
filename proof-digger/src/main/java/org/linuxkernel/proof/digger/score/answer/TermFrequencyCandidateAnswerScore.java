@@ -30,7 +30,7 @@ import org.linuxkernel.proof.digger.model.Solution;
 import org.linuxkernel.proof.digger.model.SolutionCollection;
 import org.linuxkernel.proof.digger.model.Proof;
 import org.linuxkernel.proof.digger.model.Issue;
-import org.linuxkernel.proof.digger.parser.WordParser;
+import org.linuxkernel.proof.digger.parser.WordSegment;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,14 +83,14 @@ public class TermFrequencyCandidateAnswerScore implements CandidateAnswerScore {
         List<String> snippetNames = new ArrayList<>();
 
         //处理title
-        List<Term> terms = WordParser.parse(title);
+        List<Term> terms = WordSegment.parse(title);
         for (Term term : terms) {
             if (term.getNatrue().natureStr.startsWith(question.getQuestionType().getNature())) {
                 titleNames.add(term.getName());
             }
         }
         //处理snippet
-        terms = WordParser.parse(snippet);
+        terms = WordSegment.parse(snippet);
         for (Term term : terms) {
             if (term.getNatrue().natureStr.startsWith(question.getQuestionType().getNature())) {
                 snippetNames.add(term.getName());

@@ -11,7 +11,7 @@ import java.util.Set;
 import org.ansj.domain.Term;
 import org.linuxkernel.proof.digger.filter.CandidateAnswerCanNotInQustionFilter;
 import org.linuxkernel.proof.digger.filter.CandidateAnswerFilter;
-import org.linuxkernel.proof.digger.parser.WordParser;
+import org.linuxkernel.proof.digger.parser.WordSegment;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class Issue {
 
     private static final Logger LOG = LoggerFactory.getLogger(Issue.class);
-    private String question;
+    private String issue;
     private final List<Proof> evidences = new ArrayList<>();
 
     private Type questionType = Type.PERSON_NAME;
@@ -48,7 +48,7 @@ public class Issue {
     public Map.Entry<String, Integer> getHot() {
         List<String> questionTerms = getTerms();
         Map<String, Integer> map = new HashMap<>();
-        List<Term> terms = WordParser.parse(getText());
+        List<Term> terms = WordSegment.parse(getText());
         for (Term term : terms) {
             Integer count = map.get(term.getName());
             if (count == null) {
@@ -97,7 +97,7 @@ public class Issue {
      */
     public List<String> getTerms() {
         List<String> result = new ArrayList<>();
-        List<Term> terms = WordParser.parse(question.replace("?", "").replace("？", ""));
+        List<Term> terms = WordSegment.parse(issue.replace("?", "").replace("？", ""));
         for (Term term : terms) {
             result.add(term.getName());
         }
@@ -181,15 +181,17 @@ public class Issue {
         return text.toString();
     }
 
-    public String getQuestion() {
-        return question;
-    }
+  
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
+    public String getIssue() {
+		return issue;
+	}
 
-    public List<Proof> getEvidences() {
+	public void setIssue(String issue) {
+		this.issue = issue;
+	}
+
+	public List<Proof> getEvidences() {
         return this.evidences;
     }
 
@@ -208,7 +210,7 @@ public class Issue {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("?. ").append(question).append("\n\n");
+        result.append("?. ").append(issue).append("\n\n");
         for (Proof evidence : this.evidences) {
             result.append("Title: ").append(evidence.getTitle()).append("\n");
             result.append("Snippet: ").append(evidence.getSnippet()).append("\n\n");
@@ -219,7 +221,7 @@ public class Issue {
 
     public String toString(int index) {
         StringBuilder result = new StringBuilder();
-        result.append("?").append(index).append(". ").append(question).append("\n\n");
+        result.append("?").append(index).append(". ").append(issue).append("\n\n");
         for (Proof evidence : this.evidences) {
             result.append("Title: ").append(evidence.getTitle()).append("\n");
             result.append("Snippet: ").append(evidence.getSnippet()).append("\n\n");

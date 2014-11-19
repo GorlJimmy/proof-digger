@@ -26,8 +26,8 @@ import java.util.List;
 import org.linuxkernel.proof.digger.datasource.BaiduDataSource;
 import org.linuxkernel.proof.digger.datasource.DataSource;
 import org.linuxkernel.proof.digger.files.FilesConfig;
-import org.linuxkernel.proof.digger.system.CommonQuestionAnsweringSystem;
-import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
+import org.linuxkernel.proof.digger.system.CommonIssueSolutionSystem;
+import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
 
 /**
  * 从配置文件中读取问题 然后从baidu搜索证据 然后计算候选答案
@@ -48,7 +48,7 @@ public class BaiduDemo {
         files.add(FilesConfig.timeQuestions);
         DataSource dataSource = new BaiduDataSource(files);
 
-        QuestionAnsweringSystem questionAnsweringSystem = new CommonQuestionAnsweringSystem();
+        IssueSolutionSystem questionAnsweringSystem = new CommonIssueSolutionSystem();
         questionAnsweringSystem.setDataSource(dataSource);
         questionAnsweringSystem.answerQuestions();
         questionAnsweringSystem.showPerfectQuestions();

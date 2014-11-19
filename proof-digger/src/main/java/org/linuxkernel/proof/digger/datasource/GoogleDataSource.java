@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import org.linuxkernel.proof.digger.files.FilesConfig;
 import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.model.Proof;
-import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
+import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
 import org.linuxkernel.proof.digger.util.MySQLUtils;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
@@ -35,14 +35,9 @@ public class GoogleDataSource implements DataSource {
 	private static final Logger _LOG = LoggerFactory.getLogger(GoogleDataSource.class);
 	private int _searchTimes = 0;
 	private static final int _GOOGLESEARCHLIMIT = 10;
-	// 获取多少页
 	private static final int _PAGE = 1;
 	private static final int _PAGESIZE = 8;
-	// 使用摘要还是全文
-	// 使用摘要
 	private static final boolean SUMMARY = true;
-	// 使用全文
-	// private static final boolean SUMMARY = false;
 	private List<String> files = new ArrayList<>();
 
 	public GoogleDataSource() {
@@ -57,8 +52,8 @@ public class GoogleDataSource implements DataSource {
 	}
 
 	@Override
-	public Issue getIssue(String questionStr) {
-		return getAndAnswerQuestion(questionStr, null);
+	public Issue getIssue(String str_issue) {
+		return getAndAnswerQuestion(str_issue, null);
 	}
 
 	@Override
@@ -67,44 +62,25 @@ public class GoogleDataSource implements DataSource {
 	}
 
 	@Override
-	public List<Issue> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
+	public List<Issue> getAndAnswerQuestions(IssueSolutionSystem questionAnsweringSystem) {
 		List<Issue> questions = new ArrayList<>();
 
 		for (String file : files) {
-			BufferedReader reader = null;
-			try {
-				reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(file), "utf-8"));
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(file), "utf-8"));) {
+
 				String line = reader.readLine();
 				while (line != null) {
 					if (line.trim().equals("") || line.trim().startsWith("#") || line.indexOf("#") == 1 || line.length() < 3) {
-						// 读下一行
 						line = reader.readLine();
 						continue;
 					}
 					_LOG.info("从类路径的 " + file + " 中加载Question:" + line.trim());
 					if (_searchTimes % _GOOGLESEARCHLIMIT == (_GOOGLESEARCHLIMIT - 1)) {
 						_LOG.info("请更换IP：");
-						try {
-							Thread.sleep(30000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						_LOG.info("继续");
-					}
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
 					}
 					String questionStr = null;
 					String expectAnswer = null;
 					String[] attrs = line.trim().split("[:|：]");
-					if (attrs == null) {
-						questionStr = line.trim();
-					}
-					if (attrs != null && attrs.length == 1) {
-						questionStr = attrs[0];
-					}
 					if (attrs != null && attrs.length == 2) {
 						questionStr = attrs[0];
 						expectAnswer = attrs[1];
@@ -118,12 +94,9 @@ public class GoogleDataSource implements DataSource {
 						questions.add(question);
 					}
 
-					// 回答问题
 					if (questionAnsweringSystem != null && question != null) {
 						questionAnsweringSystem.answerQuestion(question);
 					}
-
-					// 读下一行
 					line = reader.readLine();
 				}
 			} catch (FileNotFoundException e) {
@@ -132,27 +105,20 @@ public class GoogleDataSource implements DataSource {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			} finally {
-				if (reader != null) {
-					try {
-						reader.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
 			}
+
 			_LOG.info("从Question文件" + file + "中加载Question，从google中检索到了 " + questions.size() + " 个Question");
 		}
 		return questions;
 	}
 
 	@Override
-	public Issue getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+	public Issue getAndAnswerQuestion(String questionStr, IssueSolutionSystem questionAnsweringSystem) {
 		// 1、先从本地缓存里面找
 		Issue question = MySQLUtils.getQuestionFromDatabase("google:", questionStr);
 		if (question != null) {
 			// 数据库中存在
-			_LOG.info("从数据库中查询到Question：" + question.getQuestion());
+			_LOG.info("从数据库中查询到Question：" + question.getIssue());
 			// 回答问题
 			if (questionAnsweringSystem != null) {
 				questionAnsweringSystem.answerQuestion(question);
@@ -161,11 +127,11 @@ public class GoogleDataSource implements DataSource {
 		}
 		// 2、本地缓存里面没有再查询google
 		question = new Issue();
-		question.setQuestion(questionStr);
+		question.setIssue(questionStr);
 
 		String query = "";
 		try {
-			query = URLEncoder.encode(question.getQuestion(), "UTF-8");
+			query = URLEncoder.encode(question.getIssue(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			_LOG.error("url构造失败", e);
 			return null;
@@ -180,13 +146,13 @@ public class GoogleDataSource implements DataSource {
 				break;
 			}
 		}
-		_LOG.info("Question：" + question.getQuestion() + " 搜索到Evidence " + question.getEvidences().size() + " 条");
+		_LOG.info("Question：" + question.getIssue() + " 搜索到Evidence " + question.getEvidences().size() + " 条");
 		if (question.getEvidences().isEmpty()) {
 			return null;
 		}
 		// 3、将google查询结果加入本地缓存
 		if (question.getEvidences().size() > 7) {
-			_LOG.info("将Question：" + question.getQuestion() + " 加入MySQL数据库");
+			_LOG.info("将Question：" + question.getIssue() + " 加入MySQL数据库");
 			MySQLUtils.saveQuestionToDatabase("google:", question);
 		}
 		_searchTimes++;

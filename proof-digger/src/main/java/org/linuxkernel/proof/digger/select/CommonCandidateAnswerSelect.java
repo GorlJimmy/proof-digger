@@ -30,7 +30,7 @@ import org.linuxkernel.proof.digger.model.Solution;
 import org.linuxkernel.proof.digger.model.SolutionCollection;
 import org.linuxkernel.proof.digger.model.Proof;
 import org.linuxkernel.proof.digger.model.Issue;
-import org.linuxkernel.proof.digger.parser.WordParser;
+import org.linuxkernel.proof.digger.parser.WordSegment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +47,7 @@ public class CommonCandidateAnswerSelect implements CandidateAnswerSelect {
     public void select(Issue question, Proof evidence) {
         SolutionCollection candidateAnswerCollection = new SolutionCollection();
 
-        List<Term> terms = WordParser.parse(evidence.getTitle() + evidence.getSnippet());
+        List<Term> terms = WordSegment.parse(evidence.getTitle() + evidence.getSnippet());
         for (Term term : terms) {
             if (term.getNatrue().natureStr.startsWith(question.getQuestionType().getNature()) && term.getName().length() > 1) {
                 Solution answer = new Solution();
@@ -68,7 +68,7 @@ public class CommonCandidateAnswerSelect implements CandidateAnswerSelect {
         CommonCandidateAnswerSelect commonCandidateAnswerSelect = new CommonCandidateAnswerSelect();
         int i = 1;
         for (Issue question : questions) {
-            LOG.info("Question " + (i++) + ": " + question.getQuestion());
+            LOG.info("Question " + (i++) + ": " + question.getIssue());
             int j = 1;
             for (Proof evidence : question.getEvidences()) {
                 LOG.info("	Evidence " + j + ": ");

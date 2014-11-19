@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ansj.domain.Term;
-import org.linuxkernel.proof.digger.parser.WordParser;
+import org.linuxkernel.proof.digger.parser.WordSegment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,7 +64,7 @@ public class MainPartExtracter {
     public String getQuestionMainPartNaturePattern(String question, String mainPart) {
         Map<String, String> map = new HashMap<>();
         //分词
-        List<Term> terms = WordParser.parse(question);
+        List<Term> terms = WordSegment.parse(question);
         for (Term term : terms) {
             map.put(term.getName(), term.getNatrue().natureStr);
         }
@@ -83,7 +83,7 @@ public class MainPartExtracter {
     public String getQuestionMainPartPattern(String question, String mainPart) {
         Map<String, String> map = new HashMap<>();
         //分词
-        List<Term> terms = WordParser.parse(question);
+        List<Term> terms = WordSegment.parse(question);
         for (Term term : terms) {
             map.put(term.getName(), term.getNatrue().natureStr);
         }
@@ -300,7 +300,7 @@ public class MainPartExtracter {
     private String questionParse(String question) {
         //分词
         LOG.info("对问题进行分词：" + question);
-        List<Term> terms = WordParser.parse(question);
+        List<Term> terms = WordSegment.parse(question);
         StringBuilder termStr = new StringBuilder();
         for (Term term : terms) {
             termStr.append(term.getName()).append(" ");

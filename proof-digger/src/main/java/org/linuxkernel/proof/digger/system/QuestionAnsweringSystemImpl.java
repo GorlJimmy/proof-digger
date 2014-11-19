@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author 杨尚川
  */
-public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
+public class QuestionAnsweringSystemImpl implements IssueSolutionSystem {
 
     private static final Logger LOG = LoggerFactory.getLogger(QuestionAnsweringSystemImpl.class);
 
@@ -180,7 +180,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     public List<Issue> answerQuestions(List<Issue> questions) {
         for (Issue question : questions) {
             question = questionClassifier.classify(question);
-            LOG.info("开始处理Question " + (questionIndex++) + "：" + question.getQuestion() + " 【问题类型：" + question.getQuestionType() + "】");
+            LOG.info("开始处理Question " + (questionIndex++) + "：" + question.getIssue() + " 【问题类型：" + question.getQuestionType() + "】");
             if (question.getQuestionType() == Type.NULL) {
                 unknownTypeQuestions.add(question);
                 //未知类型按回答错误处理
@@ -223,7 +223,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
             }
             LOG.info("************************************");
             LOG.info("************************************");
-            LOG.info("Question " + question.getQuestion());
+            LOG.info("Question " + question.getIssue());
             LOG.info("Question 候选答案：");
             for (Solution candidateAnswer : question.getAllCandidateAnswer()) {
                 LOG.info(candidateAnswer.getAnswer() + "  " + candidateAnswer.getScore());
@@ -277,7 +277,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
         LOG.info("回答完美的问题：");
         int i = 1;
         for (Issue question : perfectQuestions) {
-            LOG.info((i++) + "、" + question.getQuestion() + " : " + question.getExpectAnswerRank());
+            LOG.info((i++) + "、" + question.getIssue() + " : " + question.getExpectAnswerRank());
         }
     }
 
@@ -286,7 +286,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
         LOG.info("回答不完美的问题：");
         int i = 1;
         for (Issue question : notPerfectQuestions) {
-            LOG.info((i++) + "、" + question.getQuestion() + " : " + question.getExpectAnswerRank());
+            LOG.info((i++) + "、" + question.getIssue() + " : " + question.getExpectAnswerRank());
         }
     }
 
@@ -295,7 +295,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
         LOG.info("回答错误的问题：");
         int i = 1;
         for (Issue question : wrongQuestions) {
-            LOG.info((i++) + "、" + question.getQuestion());
+            LOG.info((i++) + "、" + question.getIssue());
         }
     }
 
@@ -304,7 +304,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
         LOG.info("未知类型的问题：");
         int i = 1;
         for (Issue question : unknownTypeQuestions) {
-            LOG.info((i++) + "、" + question.getQuestion());
+            LOG.info((i++) + "、" + question.getIssue());
         }
     }
 
@@ -391,7 +391,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
         //combinationCandidateAnswerScore.addCandidateAnswerScore(rewindTextualAlignmentCandidateAnswerScore);
         combinationCandidateAnswerScore.addCandidateAnswerScore(hotCandidateAnswerScore);
 
-        QuestionAnsweringSystem questionAnsweringSystem = new QuestionAnsweringSystemImpl();
+        IssueSolutionSystem questionAnsweringSystem = new QuestionAnsweringSystemImpl();
         questionAnsweringSystem.setDataSource(dataSource);
         questionAnsweringSystem.setCandidateAnswerSelect(candidateAnswerSelect);
         questionAnsweringSystem.setEvidenceScore(combinationEvidenceScore);

@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 
 import org.ansj.domain.Term;
 import org.linuxkernel.proof.digger.model.Issue;
-import org.linuxkernel.proof.digger.parser.WordParser;
+import org.linuxkernel.proof.digger.parser.WordSegment;
 import org.linuxkernel.proof.digger.questiontypeanalysis.AbstractQuestionClassifier;
 import org.linuxkernel.proof.digger.questiontypeanalysis.QuestionClassifier;
 import org.linuxkernel.proof.digger.util.Tools;
@@ -116,7 +116,7 @@ public class PatternBasedMultiLevelQuestionClassifier extends AbstractQuestionCl
 
     @Override
     public Issue classify(Issue question) {
-        String questionStr = question.getQuestion();
+        String questionStr = question.getIssue();
         LOG.info("使用【模式匹配】的方法判断问题类型： " + questionStr);
         PatternMatchStrategy patternMatchStrategy = getPatternMatchStrategy();
         if (!patternMatchStrategy.validate()) {
@@ -298,7 +298,7 @@ public class PatternBasedMultiLevelQuestionClassifier extends AbstractQuestionCl
 
             if (termWithNature == null || nature == null) {
                 //提取问题词性以便和模式进行匹配
-                List<Term> terms = WordParser.parse(question);
+                List<Term> terms = WordSegment.parse(question);
                 //APDPlat的发起人是谁？
                 //apdplat/en 的/uj 发起人/n 是/v 谁/RW.RWPersonSingle ？/w 
                 StringBuilder termWithNatureStrs = new StringBuilder();
@@ -417,7 +417,7 @@ public class PatternBasedMultiLevelQuestionClassifier extends AbstractQuestionCl
         Issue question = questionClassifier.classify("Who is the author of apdplat?");
 
         if (question != null) {
-            LOG.info("问题【" + question.getQuestion() + "】的类型为：" + question.getQuestionType() + " 候选类型为：" + question.getCandidateQuestionTypes());
+            LOG.info("问题【" + question.getIssue() + "】的类型为：" + question.getQuestionType() + " 候选类型为：" + question.getCandidateQuestionTypes());
         }
     }
 }

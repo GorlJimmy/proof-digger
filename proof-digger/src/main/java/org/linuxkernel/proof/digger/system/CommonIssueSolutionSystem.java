@@ -56,11 +56,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author 杨尚川
  */
-public class CommonQuestionAnsweringSystem extends QuestionAnsweringSystemImpl {
+public class CommonIssueSolutionSystem extends QuestionAnsweringSystemImpl {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CommonQuestionAnsweringSystem.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CommonIssueSolutionSystem.class);
 
-    public CommonQuestionAnsweringSystem() {
+    public CommonIssueSolutionSystem() {
         LOG.info("开始构造问答系统");
         //1、默认评分组件权重
         ScoreWeight scoreWeight = new ScoreWeight();
@@ -155,7 +155,7 @@ public class CommonQuestionAnsweringSystem extends QuestionAnsweringSystemImpl {
      * @param args
      */
     public static void main(String[] args) {
-        QuestionAnsweringSystem questionAnsweringSystem = new CommonQuestionAnsweringSystem();
+        IssueSolutionSystem questionAnsweringSystem = new CommonIssueSolutionSystem();
         questionAnsweringSystem.answerQuestions();
     }
 }

@@ -77,7 +77,7 @@ public class TextualAlignmentCandidateAnswerScore implements CandidateAnswerScor
                     }
                 }
                 String textualAlignmentPattern = textualAlignment.toString();
-                if (question.getQuestion().trim().equals(textualAlignmentPattern.trim())) {
+                if (question.getIssue().trim().equals(textualAlignmentPattern.trim())) {
                     LOG.debug("文本对齐模式和原问题相同，忽略：" + textualAlignmentPattern);
                     continue;
                 }
@@ -114,7 +114,7 @@ public class TextualAlignmentCandidateAnswerScore implements CandidateAnswerScor
                     double avgLen = (double) length / count;
 					//问题长度questionLen为正因子
                     //匹配长度avgLen为负因子
-                    int questionLen = question.getQuestion().length();
+                    int questionLen = question.getIssue().length();
                     double score = questionLen / avgLen;
                     score *= scoreWeight.getTextualAlignmentCandidateAnswerScoreWeight();
                     candidateAnswer.addScore(score);

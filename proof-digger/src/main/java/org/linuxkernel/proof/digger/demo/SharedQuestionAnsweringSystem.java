@@ -21,19 +21,19 @@
 package org.linuxkernel.proof.digger.demo;
 
 import org.linuxkernel.proof.digger.datasource.BaiduDataSource;
-import org.linuxkernel.proof.digger.system.CommonQuestionAnsweringSystem;
-import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
+import org.linuxkernel.proof.digger.system.CommonIssueSolutionSystem;
+import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
 
 /**
  * 使用百度数据源的共享问答系统
  * @author 杨尚川
  */
 public class SharedQuestionAnsweringSystem {
-    private static final QuestionAnsweringSystem QUESTION_ANSWERING_SYSTEM = new CommonQuestionAnsweringSystem();
+    private static final IssueSolutionSystem QUESTION_ANSWERING_SYSTEM = new CommonIssueSolutionSystem();
     static{
         QUESTION_ANSWERING_SYSTEM.setDataSource(new BaiduDataSource());
     }
-    public static QuestionAnsweringSystem getInstance(){
+    public static IssueSolutionSystem getInstance(){
         return QUESTION_ANSWERING_SYSTEM;
     }
     public static void main(String[] args){

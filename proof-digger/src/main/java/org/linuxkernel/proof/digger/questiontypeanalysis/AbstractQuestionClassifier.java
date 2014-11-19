@@ -36,7 +36,7 @@ public abstract class AbstractQuestionClassifier implements QuestionClassifier {
     @Override
     public Issue classify(String question) {
         Issue q = new Issue();
-        q.setQuestion(question);
+        q.setIssue(question);
         return classify(q);
     }
 

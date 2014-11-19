@@ -135,7 +135,7 @@ public class MySQLUtils {
                     continue;
                 }
                 Issue question = new Issue();
-                question.setQuestion(que);
+                question.setIssue(que);
                 questions.add(question);
             }
         } catch (SQLException e) {
@@ -166,7 +166,7 @@ public class MySQLUtils {
                 int id = rs.getInt(1);
                 String que = rs.getString(2);
                 Issue question = new Issue();
-                question.setQuestion(que);
+                question.setIssue(que);
 
                 //2、查询证据
                 pst2 = con.prepareStatement(evidenceSql);
@@ -211,7 +211,7 @@ public class MySQLUtils {
                 //去掉前缀
                 String que = rs.getString(2).replace(pre, "");
                 Issue question = new Issue();
-                question.setQuestion(que);
+                question.setIssue(que);
                 close(pst, rs);
                 //2、查询证据
                 pst = con.prepareStatement(evidenceSql);
@@ -251,7 +251,7 @@ public class MySQLUtils {
         ResultSet rs = null;
         try {
             pst = con.prepareStatement(questionSql, Statement.RETURN_GENERATED_KEYS);
-            pst.setString(1, pre + question.getQuestion().trim().replace("?", "").replace("？", ""));
+            pst.setString(1, pre + question.getIssue().trim().replace("?", "").replace("？", ""));
             ////1、保存问题
             int count = pst.executeUpdate();
             if (count == 1) {

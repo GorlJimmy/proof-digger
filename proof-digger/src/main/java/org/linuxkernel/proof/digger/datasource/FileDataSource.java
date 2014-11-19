@@ -31,8 +31,8 @@ import java.util.List;
 import org.linuxkernel.proof.digger.files.FilesConfig;
 import org.linuxkernel.proof.digger.model.Proof;
 import org.linuxkernel.proof.digger.model.Issue;
-import org.linuxkernel.proof.digger.system.CommonQuestionAnsweringSystem;
-import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
+import org.linuxkernel.proof.digger.system.CommonIssueSolutionSystem;
+import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,9 +65,9 @@ public class FileDataSource implements DataSource {
 		return getAndAnswerQuestions(null);
 	}
     @Override
-    public Issue getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+    public Issue getAndAnswerQuestion(String questionStr, IssueSolutionSystem questionAnsweringSystem) {
         for (Issue question : getIssues()) {
-            String q = question.getQuestion().trim().replace("?", "").replace("？", "");
+            String q = question.getIssue().trim().replace("?", "").replace("？", "");
             questionStr = questionStr.trim().replace("?", "").replace("？", "");
             if (q.equals(questionStr)) {
                 //回答问题
@@ -81,7 +81,7 @@ public class FileDataSource implements DataSource {
     }
 
     @Override
-    public List<Issue> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
+    public List<Issue> getAndAnswerQuestions(IssueSolutionSystem questionAnsweringSystem) {
         List<Issue> questions = new ArrayList<>();
 
         for (String file : files) {
@@ -121,7 +121,7 @@ public class FileDataSource implements DataSource {
                         LOG.info("ExpectAnswer:" + expectAnswer);
 
                         question = new Issue();
-                        question.setQuestion(questionStr);
+                        question.setIssue(questionStr);
                         question.setExpectAnswer(expectAnswer);
                         questions.add(question);
                         //读下一行
@@ -177,7 +177,7 @@ public class FileDataSource implements DataSource {
             LOG.info(question.toString());
         }
         Issue question = dataSource.getIssue("APDPlat的发起人是谁？");
-        QuestionAnsweringSystem questionAnsweringSystem = new CommonQuestionAnsweringSystem();
+        IssueSolutionSystem questionAnsweringSystem = new CommonIssueSolutionSystem();
         questionAnsweringSystem.answerQuestion(question);
     }
 }

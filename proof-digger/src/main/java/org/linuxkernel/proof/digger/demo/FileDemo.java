@@ -20,8 +20,8 @@
 
 package org.linuxkernel.proof.digger.demo;
 
-import org.linuxkernel.proof.digger.system.CommonQuestionAnsweringSystem;
-import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
+import org.linuxkernel.proof.digger.system.CommonIssueSolutionSystem;
+import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
 
 /**
  * 从配置文件中读取问题及证据 然后计算候选答案
@@ -34,7 +34,7 @@ public class FileDemo {
      * @param args
      */
     public static void main(String[] args) {
-        QuestionAnsweringSystem questionAnsweringSystem = new CommonQuestionAnsweringSystem();
+        IssueSolutionSystem questionAnsweringSystem = new CommonIssueSolutionSystem();
         questionAnsweringSystem.answerQuestions();
         questionAnsweringSystem.showPerfectQuestions();
         questionAnsweringSystem.showNotPerfectQuestions();

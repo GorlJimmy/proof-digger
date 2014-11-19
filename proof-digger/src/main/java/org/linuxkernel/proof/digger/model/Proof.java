@@ -24,23 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ansj.domain.Term;
-import org.linuxkernel.proof.digger.parser.WordParser;
+import org.linuxkernel.proof.digger.parser.WordSegment;
 
-/**
- * 证据由title和snippet组成 对于同一个问题来说，不同的证据的重要性是不一样的，所以证据有分值 证据有多个候选答案
- *
- * @author 杨尚川
- */
+
 public class Proof {
 
     private String title;
     private String snippet;
     private double score = 1.0;
-    private SolutionCollection candidateAnswerCollection;
+    private SolutionCollection solutionCollection;
 
     public List<String> getTitleTerms() {
         List<String> result = new ArrayList<>();
-        List<Term> terms = WordParser.parse(title);
+        List<Term> terms = WordSegment.parse(title);
         for (Term term : terms) {
             result.add(term.getName());
         }
@@ -49,21 +45,17 @@ public class Proof {
 
     public List<String> getSnippetTerms() {
         List<String> result = new ArrayList<>();
-        List<Term> terms = WordParser.parse(snippet);
+        List<Term> terms = WordSegment.parse(snippet);
         for (Term term : terms) {
             result.add(term.getName());
         }
         return result;
     }
 
-    /**
-     * 对证据进行分词
-     *
-     * @return 分词结果
-     */
+    
     public List<String> getTerms() {
         List<String> result = new ArrayList<>();
-        List<Term> terms = WordParser.parse(title + snippet);
+        List<Term> terms = WordSegment.parse(title + snippet);
         for (Term term : terms) {
             result.add(term.getName());
         }
@@ -86,7 +78,7 @@ public class Proof {
         this.snippet = snippet;
     }
 
-    public double getScore() {
+	public double getScore() {
         return score;
     }
 
@@ -94,11 +86,19 @@ public class Proof {
         this.score += score;
     }
 
-    public SolutionCollection getCandidateAnswerCollection() {
-        return candidateAnswerCollection;
+    public SolutionCollection getSolutionCollection() {
+		return solutionCollection;
+	}
+
+	public void setSolutionCollection(SolutionCollection solutionCollection) {
+		this.solutionCollection = solutionCollection;
+	}
+
+	public SolutionCollection getCandidateAnswerCollection() {
+        return solutionCollection;
     }
 
     public void setCandidateAnswerCollection(SolutionCollection candidateAnswerCollection) {
-        this.candidateAnswerCollection = candidateAnswerCollection;
+        this.solutionCollection = candidateAnswerCollection;
     }
 }

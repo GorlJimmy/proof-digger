@@ -57,7 +57,7 @@ import org.linuxkernel.proof.digger.datasource.DataSource;
 import org.linuxkernel.proof.digger.datasource.FileDataSource;
 import org.linuxkernel.proof.digger.model.Proof;
 import org.linuxkernel.proof.digger.model.Issue;
-import org.linuxkernel.proof.digger.parser.WordParser;
+import org.linuxkernel.proof.digger.parser.WordSegment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -126,7 +126,7 @@ public class Tools {
         DataSource dataSource = new FileDataSource(file);
         List<Issue> questions = dataSource.getIssues();
         for (Issue question : questions) {
-            System.out.println(question.getQuestion().trim() + ":" + question.getExpectAnswer());
+            System.out.println(question.getIssue().trim() + ":" + question.getExpectAnswer());
         }
     }
 
@@ -135,7 +135,7 @@ public class Tools {
         DataSource dataSource = new FileDataSource(file);
         List<Issue> questions = dataSource.getIssues();
         for (Issue question : questions) {
-            System.out.println(pattern + " " + question.getQuestion().trim());
+            System.out.println(pattern + " " + question.getIssue().trim());
         }
     }
 
@@ -154,7 +154,7 @@ public class Tools {
             List<Proof> evidences = question.getEvidences();
             for (Proof evidence : evidences) {
                 Set<String> set = new HashSet<>();
-                List<Term> terms = WordParser.parse(evidence.getTitle() + evidence.getSnippet());
+                List<Term> terms = WordSegment.parse(evidence.getTitle() + evidence.getSnippet());
                 for (Term term : terms) {
                     set.add(term.getName());
                 }
@@ -201,7 +201,7 @@ public class Tools {
      */
     public static List<Term> getTerms(String text) {
         List<Term> result = new ArrayList<>();
-        List<Term> terms = WordParser.parse(text);
+        List<Term> terms = WordSegment.parse(text);
         for (Term term : terms) {
             result.add(term);
         }
@@ -397,16 +397,16 @@ public class Tools {
         return out.toByteArray();
     }
 
-    public static String getAppPath(Class cls) {
+    public static String getAppPath(Class<?> clazz) {
         // 检查用户传入的参数是否为空
-        if (cls == null) {
-            throw new IllegalArgumentException("参数不能为空！");
+        if (clazz == null) {
+            throw new IllegalArgumentException("Argument can not be none!");
         }
-        ClassLoader loader = cls.getClassLoader();
+        ClassLoader loader = clazz.getClassLoader();
         // 获得类的全名，包括包名
-        String clsName = cls.getName() + ".class";
+        String clsName = clazz.getName() + ".class";
         // 获得传入参数所在的包
-        Package pack = cls.getPackage();
+        Package pack = clazz.getPackage();
         String path = "";
         // 如果不是匿名包，将包名转化为路径
         if (pack != null) {

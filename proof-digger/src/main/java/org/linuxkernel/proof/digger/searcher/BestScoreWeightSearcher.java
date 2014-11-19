@@ -41,8 +41,8 @@ import org.linuxkernel.proof.digger.score.evidence.SkipBigramEvidenceScore;
 import org.linuxkernel.proof.digger.score.evidence.TermMatchEvidenceScore;
 import org.linuxkernel.proof.digger.select.CandidateAnswerSelect;
 import org.linuxkernel.proof.digger.select.CommonCandidateAnswerSelect;
-import org.linuxkernel.proof.digger.system.CommonQuestionAnsweringSystem;
-import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
+import org.linuxkernel.proof.digger.system.CommonIssueSolutionSystem;
+import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
@@ -148,7 +148,7 @@ public class BestScoreWeightSearcher {
             combinationCandidateAnswerScore.addCandidateAnswerScore(hotCandidateAnswerScore);
 
             //组装问答系统
-            QuestionAnsweringSystem questionAnsweringSystem = new CommonQuestionAnsweringSystem();
+            IssueSolutionSystem questionAnsweringSystem = new CommonIssueSolutionSystem();
             //1、指定问答系统的 候选答案提取器
             questionAnsweringSystem.setCandidateAnswerSelect(candidateAnswerSelect);
             //2、指定问答系统的 证据评分组件

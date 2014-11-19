@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.linuxkernel.proof.digger.model.Issue;
-import org.linuxkernel.proof.digger.system.CommonQuestionAnsweringSystem;
-import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
+import org.linuxkernel.proof.digger.system.CommonIssueSolutionSystem;
+import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +60,7 @@ public class ConsoleDataSource implements DataSource {
     }
 
     @Override
-    public List<Issue> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
+    public List<Issue> getAndAnswerQuestions(IssueSolutionSystem questionAnsweringSystem) {
         List<Issue> questions = new ArrayList<>();
 
         BufferedReader reader = null;
@@ -128,7 +128,7 @@ public class ConsoleDataSource implements DataSource {
     }
 
     @Override
-    public Issue getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+    public Issue getAndAnswerQuestion(String questionStr, IssueSolutionSystem questionAnsweringSystem) {
         return null;
     }
 
@@ -141,7 +141,7 @@ public class ConsoleDataSource implements DataSource {
         //控制台数据源
         dataSource = new ConsoleDataSource(dataSource);
         //人名问答系统
-        QuestionAnsweringSystem questionAnsweringSystem = new CommonQuestionAnsweringSystem();
+        IssueSolutionSystem questionAnsweringSystem = new CommonIssueSolutionSystem();
         //指定控制台数据源
         questionAnsweringSystem.setDataSource(dataSource);
         //回答问题

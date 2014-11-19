@@ -33,10 +33,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.linuxkernel.proof.digger.config.Config;
 import org.linuxkernel.proof.digger.files.FilesConfig;
 import org.linuxkernel.proof.digger.model.Proof;
 import org.linuxkernel.proof.digger.model.Issue;
-import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
+import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
 import org.linuxkernel.proof.digger.util.MySQLUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,13 +50,6 @@ import org.slf4j.LoggerFactory;
 public class BaiduDataSource implements DataSource {
 
 	private static final Logger LOG = LoggerFactory.getLogger(BaiduDataSource.class);
-
-	private static final String ACCEPT = "text/html, */*; q=0.01";
-	private static final String ENCODING = "gzip, deflate";
-	private static final String LANGUAGE = "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3";
-	private static final String CONNECTION = "keep-alive";
-	private static final String HOST = "www.baidu.com";
-	private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0";
 
 	private static final int PAGE = 1;
 	private static final int PAGESIZE = 10;
@@ -83,54 +77,37 @@ public class BaiduDataSource implements DataSource {
 	}
 
 	@Override
-	public List<Issue> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
-		List<Issue> questions = new ArrayList<>();
+	public List<Issue> getAndAnswerQuestions(IssueSolutionSystem questionAnsweringSystem) {
+		List<Issue> issues = new ArrayList<>();
 
 		for (String file : files) {
-			BufferedReader reader = null;
-			try {
-				reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(file), "utf-8"));
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(file), "utf-8"));) {
 				String line = reader.readLine();
 				while (line != null) {
 					if (line.trim().equals("") || line.trim().startsWith("#") || line.indexOf("#") == 1 || line.length() < 3) {
-						// 读下一行
 						line = reader.readLine();
 						continue;
 					}
-					LOG.info("从类路径的 " + file + " 中加载Question:" + line.trim());
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					String questionStr = null;
-					String expectAnswer = null;
-					String[] attrs = line.trim().split("[:|：]");
-					if (attrs == null) {
-						questionStr = line.trim();
-					}
-					if (attrs != null && attrs.length == 1) {
-						questionStr = attrs[0];
-					}
-					if (attrs != null && attrs.length == 2) {
-						questionStr = attrs[0];
-						expectAnswer = attrs[1];
-					}
-					LOG.info("Question:" + questionStr);
-					LOG.info("ExpectAnswer:" + expectAnswer);
+					String str_issue = null;
+					String str_solution = null;
+					String[] pairs_attrs = line.trim().split("[:|：]");
 
-					Issue question = getIssue(questionStr);
-					if (question != null) {
-						question.setExpectAnswer(expectAnswer);
-						questions.add(question);
+					if (pairs_attrs != null && pairs_attrs.length == 2) {
+						str_issue = pairs_attrs[0];
+						str_solution = pairs_attrs[1];
+					}
+					LOG.info("Issue: " + str_issue);
+					LOG.info("Solution: " + str_solution);
+					Issue issue = getIssue(str_issue);
+					if (issue != null) {
+						issue.setExpectAnswer(str_solution);
+						issues.add(issue);
 					}
 
-					// 回答问题
-					if (questionAnsweringSystem != null && question != null) {
-						questionAnsweringSystem.answerQuestion(question);
+					if (questionAnsweringSystem != null && issue != null) {
+						questionAnsweringSystem.answerQuestion(issue);
 					}
 
-					// 读下一行
 					line = reader.readLine();
 				}
 			} catch (FileNotFoundException e) {
@@ -139,27 +116,18 @@ public class BaiduDataSource implements DataSource {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			} finally {
-				if (reader != null) {
-					try {
-						reader.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
 			}
-			LOG.info("从Question文件" + file + "中加载Question，从baidu中检索到了 " + questions.size() + " 个Question");
 		}
-		return questions;
+		return issues;
 	}
 
 	@Override
-	public Issue getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+	public Issue getAndAnswerQuestion(String questionStr, IssueSolutionSystem questionAnsweringSystem) {
 		// 1、先从本地缓存里面找
 		Issue question = MySQLUtils.getQuestionFromDatabase("baidu:", questionStr);
 		if (question != null) {
 			// 数据库中存在
-			LOG.info("从数据库中查询到Question：" + question.getQuestion());
+			LOG.info("从数据库中查询到Question：" + question.getIssue());
 			// 回答问题
 			if (questionAnsweringSystem != null) {
 				questionAnsweringSystem.answerQuestion(question);
@@ -168,11 +136,11 @@ public class BaiduDataSource implements DataSource {
 		}
 		// 2、本地缓存里面没有再查询baidu
 		question = new Issue();
-		question.setQuestion(questionStr);
+		question.setIssue(questionStr);
 
 		String query = "";
 		try {
-			query = URLEncoder.encode(question.getQuestion(), "UTF-8");
+			query = URLEncoder.encode(question.getIssue(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			LOG.error("url构造失败", e);
 			return null;
@@ -191,13 +159,13 @@ public class BaiduDataSource implements DataSource {
 				break;
 			}
 		}
-		LOG.info("Question：" + question.getQuestion() + " 搜索到Evidence " + question.getEvidences().size() + " 条");
+		LOG.info("Question：" + question.getIssue() + " 搜索到Evidence " + question.getEvidences().size() + " 条");
 		if (question.getEvidences().isEmpty()) {
 			return null;
 		}
 		// 3、将baidu查询结果加入本地缓存
 		if (question.getEvidences().size() > 7) {
-			LOG.info("将Question：" + question.getQuestion() + " 加入MySQL数据库");
+			LOG.info("将Question：" + question.getIssue() + " 加入MySQL数据库");
 			MySQLUtils.saveQuestionToDatabase("baidu:", question);
 		}
 
@@ -209,43 +177,44 @@ public class BaiduDataSource implements DataSource {
 	}
 
 	private List<Proof> searchBaidu(String url, String referer) {
-		List<Proof> evidences = new ArrayList<>();
+		List<Proof> proofs = new ArrayList<>();
 		try {
-			Document document = Jsoup.connect(url).header("Accept", ACCEPT).header("Accept-Encoding", ENCODING).header("Accept-Language", LANGUAGE)
-					.header("Connection", CONNECTION).header("User-Agent", USER_AGENT).header("Host", HOST).header("Referer", referer).get();
+			Document document = Jsoup.connect(url).header("Accept", Config.ACCEPT).header("Accept-Encoding", Config.ENCODING)
+					.header("Accept-Language", Config.LANGUAGE).header("Connection", Config.CONNECTION).header("User-Agent", Config.USER_AGENT)
+					.header("Host", Config.HOST).header("Referer", referer).get();
+//			LOG.info(document.toString());
 			String resultCssQuery = "html > body > div > div > div > div > div.result";
 			Elements elements = document.select(resultCssQuery);
+			
 			for (Element element : elements) {
+				LOG.info("log: "+element.toString());
 				Elements subElements = element.select("h3 > a");
+			
 				if (subElements.size() != 1) {
-					LOG.debug("没有找到标题");
 					continue;
 				}
 				String title = subElements.get(0).text();
 				if (title == null || "".equals(title.trim())) {
-					LOG.debug("标题为空");
 					continue;
 				}
 				subElements = element.select("div.c-abstract");
 				if (subElements.size() != 1) {
-					LOG.debug("没有找到摘要");
 					continue;
 				}
 				String snippet = subElements.get(0).text();
 				if (snippet == null || "".equals(snippet.trim())) {
-					LOG.debug("摘要为空");
 					continue;
 				}
-				Proof evidence = new Proof();
-				evidence.setTitle(title);
-				evidence.setSnippet(snippet);
+				Proof proof = new Proof();
+				proof.setTitle(title);
+				proof.setSnippet(snippet);
 
-				evidences.add(evidence);
+				proofs.add(proof);
 			}
 		} catch (Exception ex) {
-			LOG.error("搜索出错", ex);
+			LOG.error("encountered error while search: ", ex);
 		}
-		return evidences;
+		return proofs;
 	}
 
 	public static void main(String args[]) {
