@@ -20,7 +20,7 @@
 
 package org.linuxkernel.proof.digger.questiontypeanalysis;
 
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.questiontypeanalysis.patternbased.PatternMatchResultSelector;
 import org.linuxkernel.proof.digger.questiontypeanalysis.patternbased.PatternMatchStrategy;
 
@@ -39,7 +39,7 @@ public interface QuestionClassifier {
 
     public PatternMatchResultSelector getPatternMatchResultSelector();
 
-    public Question classify(String question);
+    public Issue classify(String question);
 
-    public Question classify(Question question);
+    public Issue classify(Issue question);
 }

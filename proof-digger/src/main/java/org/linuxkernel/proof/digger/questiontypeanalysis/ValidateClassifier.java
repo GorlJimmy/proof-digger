@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.linuxkernel.proof.digger.model.Question;
-import org.linuxkernel.proof.digger.model.QuestionType;
+import org.linuxkernel.proof.digger.model.Issue;
+import org.linuxkernel.proof.digger.model.Type;
 import org.linuxkernel.proof.digger.questiontypeanalysis.patternbased.DefaultPatternMatchResultSelector;
 import org.linuxkernel.proof.digger.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier;
 import org.linuxkernel.proof.digger.questiontypeanalysis.patternbased.PatternMatchResultSelector;
@@ -64,14 +64,14 @@ public class ValidateClassifier {
         questionClassifier = new PatternBasedMultiLevelQuestionClassifier(patternMatchStrategy, patternMatchResultSelector);
     }
 
-    private static void validate(String filePrefix, QuestionType rightQuestionType) {
+    private static void validate(String filePrefix, Type rightQuestionType) {
         String file = "/org/apdplat.qa/questiontypeanalysis/" + filePrefix + "_name_questions.txt";
         Set<String> questions = Tools.getQuestions(file);
         LOG.info("从文件中加载" + questions.size() + "个问题：" + file);
 
         for (String q : questions) {
             q = q.split(":")[0];
-            Question question = questionClassifier.classify(q);
+            Issue question = questionClassifier.classify(q);
             if (question == null) {
                 no.add(rightQuestionType + "不能识别：" + q);
             } else if (question.getQuestionType() != rightQuestionType) {
@@ -85,11 +85,11 @@ public class ValidateClassifier {
     }
 
     private static void validate() {
-        validate("person", QuestionType.PERSON_NAME);
-        validate("location", QuestionType.LOCATION_NAME);
-        validate("organization", QuestionType.ORGANIZATION_NAME);
-        validate("number", QuestionType.NUMBER);
-        validate("time", QuestionType.TIME);
+        validate("person", Type.PERSON_NAME);
+        validate("location", Type.LOCATION_NAME);
+        validate("organization", Type.ORGANIZATION_NAME);
+        validate("number", Type.NUMBER);
+        validate("time", Type.TIME);
 
         int total = no.size() + right.size() + wrong.size() + unknown.size();
         LOG.info("识别总数: " + total);

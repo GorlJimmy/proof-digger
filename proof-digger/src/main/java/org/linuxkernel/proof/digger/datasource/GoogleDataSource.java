@@ -38,8 +38,8 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.linuxkernel.proof.digger.files.FilesConfig;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
 import org.linuxkernel.proof.digger.util.MySQLUtils;
 import org.linuxkernel.proof.digger.util.Tools;
@@ -79,18 +79,18 @@ public class GoogleDataSource implements DataSource {
     }
 
     @Override
-    public Question getQuestion(String questionStr) {
+    public Issue getQuestion(String questionStr) {
         return getAndAnswerQuestion(questionStr, null);
     }
 
     @Override
-    public List<Question> getQuestions() {
+    public List<Issue> getQuestions() {
         return getAndAnswerQuestions(null);
     }
 
     @Override
-    public List<Question> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
-        List<Question> questions = new ArrayList<>();
+    public List<Issue> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
+        List<Issue> questions = new ArrayList<>();
 
         for (String file : files) {
             BufferedReader reader = null;
@@ -134,7 +134,7 @@ public class GoogleDataSource implements DataSource {
                     LOG.info("Question:" + questionStr);
                     LOG.info("ExpectAnswer:" + expectAnswer);
 
-                    Question question = getQuestion(questionStr);
+                    Issue question = getQuestion(questionStr);
                     if (question != null) {
                         question.setExpectAnswer(expectAnswer);
                         questions.add(question);
@@ -169,9 +169,9 @@ public class GoogleDataSource implements DataSource {
     }
 
     @Override
-    public Question getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+    public Issue getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
         //1、先从本地缓存里面找
-        Question question = MySQLUtils.getQuestionFromDatabase("google:", questionStr);
+        Issue question = MySQLUtils.getQuestionFromDatabase("google:", questionStr);
         if (question != null) {
             //数据库中存在
             LOG.info("从数据库中查询到Question：" + question.getQuestion());
@@ -182,7 +182,7 @@ public class GoogleDataSource implements DataSource {
             return question;
         }
         //2、本地缓存里面没有再查询google
-        question = new Question();
+        question = new Issue();
         question.setQuestion(questionStr);
 
         String query = "";
@@ -194,7 +194,7 @@ public class GoogleDataSource implements DataSource {
         }
         for (int i = 0; i < PAGE; i++) {
             query = "http://ajax.googleapis.com/ajax/services/search/web?start=" + i * PAGESIZE + "&rsz=large&v=1.0&q=" + query;
-            List<Evidence> evidences = search(query);
+            List<Proof> evidences = search(query);
             if (evidences.size() > 0) {
                 question.addEvidences(evidences);
             } else {
@@ -220,8 +220,8 @@ public class GoogleDataSource implements DataSource {
         return question;
     }
 
-    private List<Evidence> search(String query) {
-        List<Evidence> evidences = new ArrayList<>();
+    private List<Proof> search(String query) {
+        List<Proof> evidences = new ArrayList<>();
         try {
             HttpClient httpClient = new HttpClient();
             
@@ -247,7 +247,7 @@ public class GoogleDataSource implements DataSource {
 
             LOG.debug(" Results:");
             for (int i = 0; i < results.length(); i++) {
-                Evidence evidence = new Evidence();
+                Proof evidence = new Proof();
                 JSONObject result = results.getJSONObject(i);
                 String title = result.getString("titleNoFormatting");
                 LOG.debug(title);
@@ -281,7 +281,7 @@ public class GoogleDataSource implements DataSource {
     }
 
     public static void main(String args[]) {
-        Question question = new GoogleDataSource(FilesConfig.personNameQuestions).getQuestion("APDPlat的发起人是谁？");
+        Issue question = new GoogleDataSource(FilesConfig.personNameQuestions).getQuestion("APDPlat的发起人是谁？");
         LOG.info(question.toString());
     }
 }

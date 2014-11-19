@@ -20,8 +20,8 @@
 
 package org.linuxkernel.proof.digger.select;
 
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 
 /**
  * 候选答案提取组件
@@ -36,5 +36,5 @@ public interface CandidateAnswerSelect {
      * @param question 问题
      * @param evidence 证据
      */
-    public void select(Question question, Evidence evidence);
+    public void select(Issue question, Proof evidence);
 }

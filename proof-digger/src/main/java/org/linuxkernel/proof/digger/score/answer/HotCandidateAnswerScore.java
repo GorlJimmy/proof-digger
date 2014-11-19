@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.ansj.domain.Term;
-import org.linuxkernel.proof.digger.model.CandidateAnswer;
-import org.linuxkernel.proof.digger.model.CandidateAnswerCollection;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Solution;
+import org.linuxkernel.proof.digger.model.SolutionCollection;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
@@ -53,10 +53,10 @@ public class HotCandidateAnswerScore implements CandidateAnswerScore {
     }
 
     @Override
-    public void score(Question question, Evidence evidence, CandidateAnswerCollection candidateAnswerCollection) {
+    public void score(Issue question, Proof evidence, SolutionCollection candidateAnswerCollection) {
         LOG.debug("*************************");
         LOG.debug("热词评分开始");
-        CandidateAnswer bestCandidateAnswer = null;
+        Solution bestCandidateAnswer = null;
         int miniDistance = Integer.MAX_VALUE;
         //1、对证据进行分词
         List<Term> terms = Tools.getTerms(evidence.getTitle() + "," + evidence.getSnippet());
@@ -74,7 +74,7 @@ public class HotCandidateAnswerScore implements CandidateAnswerScore {
                 hotTermOffes.add(term.getOffe());
             }
         }
-        for (CandidateAnswer candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
+        for (Solution candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
             //4、找出候选答案的位置数组
             List<Integer> candidateAnswerOffes = new ArrayList<>();
             for (Term term : terms) {

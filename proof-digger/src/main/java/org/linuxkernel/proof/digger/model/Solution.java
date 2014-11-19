@@ -25,7 +25,7 @@ package org.linuxkernel.proof.digger.model;
  *
  * @author 杨尚川
  */
-public class CandidateAnswer implements Comparable<CandidateAnswer> {
+public class Solution implements Comparable<Solution> {
 
     private String answer;
     private double score = 1.0;
@@ -51,9 +51,9 @@ public class CandidateAnswer implements Comparable<CandidateAnswer> {
     }
 
     @Override
-    public int compareTo(CandidateAnswer o) {
-        if (o != null && o instanceof CandidateAnswer) {
-            CandidateAnswer a = (CandidateAnswer) o;
+    public int compareTo(Solution o) {
+        if (o != null && o instanceof Solution) {
+            Solution a = (Solution) o;
             if (this.score < a.score) {
                 return -1;
             }
@@ -77,10 +77,10 @@ public class CandidateAnswer implements Comparable<CandidateAnswer> {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof CandidateAnswer)) {
+        if (!(obj instanceof Solution)) {
             return false;
         }
-        CandidateAnswer a = (CandidateAnswer) obj;
+        Solution a = (Solution) obj;
         return this.answer.equals(a.answer);
     }
 }

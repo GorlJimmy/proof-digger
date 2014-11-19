@@ -20,7 +20,7 @@
 
 package org.linuxkernel.proof.digger.demo;
 
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.util.MySQLUtils;
 import org.linuxkernel.proof.digger.util.Tools;
 
@@ -34,7 +34,7 @@ public class ExportDatabase {
     public static void main(String[] args) {
         StringBuilder str = new StringBuilder();
         int i = 1;
-        for (Question question : MySQLUtils.getQuestionsFromDatabase()) {
+        for (Issue question : MySQLUtils.getQuestionsFromDatabase()) {
             str.append(question.toString((i++)));
         }
         Tools.createAndWriteFile("d:/material_export.txt", str.toString());

@@ -20,7 +20,7 @@
 
 package org.linuxkernel.proof.digger.questiontypeanalysis.patternbased;
 
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Issue;
 
 /**
  * 模式匹配结果选择器 从1到多个结果中选择一个
@@ -29,5 +29,5 @@ import org.linuxkernel.proof.digger.model.Question;
  */
 public interface PatternMatchResultSelector {
 
-    public Question select(Question question, PatternMatchResult patternMatchResult);
+    public Issue select(Issue question, PatternMatchResult patternMatchResult);
 }

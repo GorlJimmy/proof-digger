@@ -23,7 +23,7 @@ package org.linuxkernel.proof.digger.system;
 import java.util.List;
 
 import org.linuxkernel.proof.digger.datasource.DataSource;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.questiontypeanalysis.QuestionClassifier;
 import org.linuxkernel.proof.digger.score.answer.CandidateAnswerScore;
 import org.linuxkernel.proof.digger.score.evidence.EvidenceScore;
@@ -86,7 +86,7 @@ public interface QuestionAnsweringSystem {
      *
      * @return
      */
-    public List<Question> answerQuestions();
+    public List<Issue> answerQuestions();
 
     /**
      * 利用dataSource搜索问题并回答问题
@@ -94,7 +94,7 @@ public interface QuestionAnsweringSystem {
      * @param questionStr 问题字符串
      * @return 问题
      */
-    public Question answerQuestion(String questionStr);
+    public Issue answerQuestion(String questionStr);
 
     /**
      * 回答指定的问题
@@ -102,7 +102,7 @@ public interface QuestionAnsweringSystem {
      * @param question 问题
      * @return
      */
-    public Question answerQuestion(Question question);
+    public Issue answerQuestion(Issue question);
 
     /**
      * 回答指定的多个问题
@@ -110,7 +110,7 @@ public interface QuestionAnsweringSystem {
      * @param questions 多个问题
      * @return
      */
-    public List<Question> answerQuestions(List<Question> questions);
+    public List<Issue> answerQuestions(List<Issue> questions);
 
     /**
      * 输出回答完美的问题
@@ -137,28 +137,28 @@ public interface QuestionAnsweringSystem {
      *
      * @return
      */
-    public List<Question> getPerfectQuestions();
+    public List<Issue> getPerfectQuestions();
 
     /**
      * 获取回答不完美的问题
      *
      * @return
      */
-    public List<Question> getNotPerfectQuestions();
+    public List<Issue> getNotPerfectQuestions();
 
     /**
      * 获取回答错误的问题
      *
      * @return
      */
-    public List<Question> getWrongQuestions();
+    public List<Issue> getWrongQuestions();
 
     /**
      * 获取未知类型的问题
      *
      * @return
      */
-    public List<Question> getUnknownTypeQuestions();
+    public List<Issue> getUnknownTypeQuestions();
 
     /**
      * 获取问答系统的MRR指标

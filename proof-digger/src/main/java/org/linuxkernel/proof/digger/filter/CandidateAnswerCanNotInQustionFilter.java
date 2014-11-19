@@ -23,8 +23,8 @@ package org.linuxkernel.proof.digger.filter;
 import java.util.Iterator;
 import java.util.List;
 
-import org.linuxkernel.proof.digger.model.CandidateAnswer;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Solution;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +38,7 @@ public class CandidateAnswerCanNotInQustionFilter implements CandidateAnswerFilt
     private static final Logger LOG = LoggerFactory.getLogger(CandidateAnswerCanNotInQustionFilter.class);
 
     @Override
-    public void filter(Question question, List<CandidateAnswer> candidateAnswers) {
+    public void filter(Issue question, List<Solution> candidateAnswers) {
         //对问题分词
         List<String> questionTerms = question.getTerms();
         StringBuilder str = new StringBuilder();
@@ -48,9 +48,9 @@ public class CandidateAnswerCanNotInQustionFilter implements CandidateAnswerFilt
         }
         LOG.debug(str.toString());
         //答案不能在问题中，去掉
-        Iterator<CandidateAnswer> iterator = candidateAnswers.iterator();
+        Iterator<Solution> iterator = candidateAnswers.iterator();
         while (iterator.hasNext()) {
-            CandidateAnswer candidateAnswer = iterator.next();
+            Solution candidateAnswer = iterator.next();
             if (questionTerms.contains(candidateAnswer.getAnswer())) {
                 iterator.remove();
                 LOG.debug("去掉问题中的词：" + candidateAnswer.getAnswer());

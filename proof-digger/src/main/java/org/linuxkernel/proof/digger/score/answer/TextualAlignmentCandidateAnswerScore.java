@@ -26,10 +26,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ansj.domain.Term;
-import org.linuxkernel.proof.digger.model.CandidateAnswer;
-import org.linuxkernel.proof.digger.model.CandidateAnswerCollection;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Solution;
+import org.linuxkernel.proof.digger.model.SolutionCollection;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
@@ -50,12 +50,12 @@ public class TextualAlignmentCandidateAnswerScore implements CandidateAnswerScor
         this.scoreWeight = scoreWeight;
     }
 
-    protected List<String> getQuestionTerms(Question question) {
+    protected List<String> getQuestionTerms(Issue question) {
         return question.getTerms();
     }
 
     @Override
-    public void score(Question question, Evidence evidence, CandidateAnswerCollection candidateAnswerCollection) {
+    public void score(Issue question, Proof evidence, SolutionCollection candidateAnswerCollection) {
         LOG.debug("*************************");
         LOG.debug("文本对齐评分开始");
         //1、对问题进行分词
@@ -64,7 +64,7 @@ public class TextualAlignmentCandidateAnswerScore implements CandidateAnswerScor
         //2、获取证据文本
         String evidenceText = evidence.getTitle() + evidence.getSnippet();
         //将每一个候选答案都放到问题的每一个位置，查找在证据中是否有匹配文本
-        for (CandidateAnswer candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
+        for (Solution candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
             //3、计算候选答案的文本对齐
             LOG.debug("计算候选答案 " + candidateAnswer.getAnswer() + " 的文本对齐");
             for (int i = 0; i < questionTermsSize; i++) {

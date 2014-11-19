@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.linuxkernel.proof.digger.model.Question;
-import org.linuxkernel.proof.digger.model.QuestionType;
+import org.linuxkernel.proof.digger.model.Issue;
+import org.linuxkernel.proof.digger.model.Type;
 import org.linuxkernel.proof.digger.questiontypeanalysis.QuestionClassifier;
 import org.linuxkernel.proof.digger.questiontypeanalysis.QuestionTypeTransformer;
 import org.linuxkernel.proof.digger.questiontypeanalysis.patternbased.DefaultPatternMatchResultSelector;
@@ -138,7 +138,7 @@ public class BestClassifierSearcher {
         int i = 1;
         int human = 0;
         for (String q : questions) {
-            QuestionType type = null;
+            Type type = null;
             //判断问题是否标注
             String[] attrs = q.split(":");
             if (attrs != null && attrs.length == 2) {
@@ -146,9 +146,9 @@ public class BestClassifierSearcher {
                 q = attrs[0].trim();
                 type = QuestionTypeTransformer.transform(attrs[1].trim());
             }
-            Question question = questionClassifier.classify(q);
+            Issue question = questionClassifier.classify(q);
             if (question != null && question.getQuestionType() != null) {
-                QuestionType questionType = question.getQuestionType();
+                Type questionType = question.getQuestionType();
                 if (type != null) {
                     //有人工标注
                     if (type == questionType) {

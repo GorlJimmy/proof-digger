@@ -20,8 +20,8 @@
 
 package org.linuxkernel.proof.digger.score.evidence;
 
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 
 /**
@@ -37,7 +37,7 @@ public interface EvidenceScore {
      * @param question 问题
      * @param evidence 证据
      */
-    public void score(Question question, Evidence evidence);
+    public void score(Issue question, Proof evidence);
 
     /**
      * 评分组件权重

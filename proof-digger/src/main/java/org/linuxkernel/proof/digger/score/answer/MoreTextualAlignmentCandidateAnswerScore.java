@@ -23,9 +23,9 @@ package org.linuxkernel.proof.digger.score.answer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.linuxkernel.proof.digger.model.CandidateAnswerCollection;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.SolutionCollection;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,8 +41,8 @@ public class MoreTextualAlignmentCandidateAnswerScore extends TextualAlignmentCa
     private static final Logger LOG = LoggerFactory.getLogger(MoreTextualAlignmentCandidateAnswerScore.class);
 
     @Override
-    public void score(Question question, Evidence evidence,
-            CandidateAnswerCollection candidateAnswerCollection) {
+    public void score(Issue question, Proof evidence,
+            SolutionCollection candidateAnswerCollection) {
         LOG.debug("*************************");
         LOG.debug("宽松文本对齐评分开始");
         super.score(question, evidence, candidateAnswerCollection);
@@ -51,7 +51,7 @@ public class MoreTextualAlignmentCandidateAnswerScore extends TextualAlignmentCa
     }
 
     @Override
-    protected List<String> getQuestionTerms(Question question) {
+    protected List<String> getQuestionTerms(Issue question) {
         List<String> list = question.getTerms();
         List<String> result = new ArrayList<>();
         for (String item : list) {

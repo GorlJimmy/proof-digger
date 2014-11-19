@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.linuxkernel.proof.digger.files.FilesConfig;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.CommonQuestionAnsweringSystem;
 import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
 import org.slf4j.Logger;
@@ -56,18 +56,18 @@ public class FileDataSource implements DataSource {
     }
 
     @Override
-    public List<Question> getQuestions() {
+    public List<Issue> getQuestions() {
         return getAndAnswerQuestions(null);
     }
 
     @Override
-    public Question getQuestion(String questionStr) {
+    public Issue getQuestion(String questionStr) {
         return getAndAnswerQuestion(questionStr, null);
     }
 
     @Override
-    public Question getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
-        for (Question question : getQuestions()) {
+    public Issue getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+        for (Issue question : getQuestions()) {
             String q = question.getQuestion().trim().replace("?", "").replace("？", "");
             questionStr = questionStr.trim().replace("?", "").replace("？", "");
             if (q.equals(questionStr)) {
@@ -82,14 +82,14 @@ public class FileDataSource implements DataSource {
     }
 
     @Override
-    public List<Question> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
-        List<Question> questions = new ArrayList<>();
+    public List<Issue> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
+        List<Issue> questions = new ArrayList<>();
 
         for (String file : files) {
             BufferedReader reader = null;
             try {
                 reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(file), "utf-8"));
-                Question question = null;
+                Issue question = null;
                 String line = reader.readLine();
                 while (line != null) {
                     if (line.trim().equals("") || line.trim().startsWith("#") || line.indexOf("#") == 1 || line.length() < 3) {
@@ -121,7 +121,7 @@ public class FileDataSource implements DataSource {
                         LOG.info("Question:" + questionStr);
                         LOG.info("ExpectAnswer:" + expectAnswer);
 
-                        question = new Question();
+                        question = new Issue();
                         question.setQuestion(questionStr);
                         question.setExpectAnswer(expectAnswer);
                         questions.add(question);
@@ -129,7 +129,7 @@ public class FileDataSource implements DataSource {
                         line = reader.readLine();
                         continue;
                     }
-                    Evidence answer = new Evidence();
+                    Proof answer = new Proof();
                     if (line.startsWith("Title:")) {
                         answer.setTitle(line.substring(6).trim());
                     }
@@ -173,11 +173,11 @@ public class FileDataSource implements DataSource {
      */
     public static void main(String[] args) {
         DataSource dataSource = new FileDataSource(FilesConfig.personNameMaterial);
-        List<Question> questions = dataSource.getQuestions();
-        for (Question question : questions) {
+        List<Issue> questions = dataSource.getQuestions();
+        for (Issue question : questions) {
             LOG.info(question.toString());
         }
-        Question question = dataSource.getQuestion("APDPlat的发起人是谁？");
+        Issue question = dataSource.getQuestion("APDPlat的发起人是谁？");
         QuestionAnsweringSystem questionAnsweringSystem = new CommonQuestionAnsweringSystem();
         questionAnsweringSystem.answerQuestion(question);
     }

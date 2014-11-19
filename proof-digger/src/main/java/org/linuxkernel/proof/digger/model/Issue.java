@@ -1,23 +1,3 @@
-/**
- * 
- * APDPlat - Application Product Development Platform
- * Copyright (c) 2013, 杨尚川, yang-shangchuan@qq.com
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- */
-
 package org.linuxkernel.proof.digger.model;
 
 import java.util.ArrayList;
@@ -36,37 +16,32 @@ import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * 问题有多个证据 证据用于提取候选答案
- *
- * @author 杨尚川
- */
-public class Question {
+public class Issue {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Question.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Issue.class);
     private String question;
-    private final List<Evidence> evidences = new ArrayList<>();
+    private final List<Proof> evidences = new ArrayList<>();
 
-    private QuestionType questionType = QuestionType.PERSON_NAME;
+    private Type questionType = Type.PERSON_NAME;
     private String expectAnswer;
     private CandidateAnswerFilter candidateAnswerFilter = new CandidateAnswerCanNotInQustionFilter();
 
     //候选的问题类型，对问题进行分类的时候，可能会有多个类型
-    private final Set<QuestionType> candidateQuestionTypes = new HashSet<>();
+    private final Set<Type> candidateQuestionTypes = new HashSet<>();
 
     public void clearCandidateQuestionType() {
         candidateQuestionTypes.clear();
     }
 
-    public void addCandidateQuestionType(QuestionType questionType) {
+    public void addCandidateQuestionType(Type questionType) {
         candidateQuestionTypes.add(questionType);
     }
 
-    public void removeCandidateQuestionType(QuestionType questionType) {
+    public void removeCandidateQuestionType(Type questionType) {
         candidateQuestionTypes.remove(questionType);
     }
 
-    public Set<QuestionType> getCandidateQuestionTypes() {
+    public Set<Type> getCandidateQuestionTypes() {
         return candidateQuestionTypes;
     }
 
@@ -104,10 +79,10 @@ public class Question {
             LOG.info("未指定期望的答案");
             return -2;
         }
-        List<CandidateAnswer> candidateAnswers = this.getAllCandidateAnswer();
+        List<Solution> candidateAnswers = this.getAllCandidateAnswer();
         int len = candidateAnswers.size();
         for (int i = 0; i < len; i++) {
-            CandidateAnswer candidateAnswer = candidateAnswers.get(i);
+            Solution candidateAnswer = candidateAnswers.get(i);
             if (expectAnswer.trim().equals(candidateAnswer.getAnswer().trim())) {
                 return (i + 1);
             }
@@ -134,10 +109,10 @@ public class Question {
      *
      * @return 所有候选答案
      */
-    public List<CandidateAnswer> getAllCandidateAnswer() {
+    public List<Solution> getAllCandidateAnswer() {
         Map<String, Double> map = new HashMap<>();
-        for (Evidence evidence : evidences) {
-            for (CandidateAnswer candidateAnswer : evidence.getCandidateAnswerCollection().getAllCandidateAnswer()) {
+        for (Proof evidence : evidences) {
+            for (Solution candidateAnswer : evidence.getCandidateAnswerCollection().getAllCandidateAnswer()) {
                 Double score = map.get(candidateAnswer.getAnswer());
                 //候选答案的分值和证据的分值 用于计算最终的候选答案分值
                 Double candidateAnswerFinalScore = candidateAnswer.getScore() + evidence.getScore();
@@ -151,12 +126,12 @@ public class Question {
         }
 
         //组装候选答案
-        List<CandidateAnswer> candidateAnswers = new ArrayList<>();
+        List<Solution> candidateAnswers = new ArrayList<>();
         for (Map.Entry<String, Double> entry : map.entrySet()) {
             String answer = entry.getKey();
             Double score = entry.getValue();
             if (answer != null && score != null && score > 0 && score < Double.MAX_VALUE) {
-                CandidateAnswer candidateAnswer = new CandidateAnswer();
+                Solution candidateAnswer = new Solution();
                 candidateAnswer.setAnswer(answer);
                 candidateAnswer.setScore(score);
                 candidateAnswers.add(candidateAnswer);
@@ -171,7 +146,7 @@ public class Question {
         //分值归一化
         if (candidateAnswers.size() > 0) {
             double baseScore = candidateAnswers.get(0).getScore();
-            for (CandidateAnswer candidateAnswer : candidateAnswers) {
+            for (Solution candidateAnswer : candidateAnswers) {
                 double score = candidateAnswer.getScore() / baseScore;
                 candidateAnswer.setScore(score);
             }
@@ -186,9 +161,9 @@ public class Question {
      * @param topN
      * @return topN候选答案
      */
-    public List<CandidateAnswer> getTopNCandidateAnswer(int topN) {
-        List<CandidateAnswer> topNcandidateAnswers = new ArrayList<>();
-        List<CandidateAnswer> allCandidateAnswers = getAllCandidateAnswer();
+    public List<Solution> getTopNCandidateAnswer(int topN) {
+        List<Solution> topNcandidateAnswers = new ArrayList<>();
+        List<Solution> allCandidateAnswers = getAllCandidateAnswer();
         if (topN > allCandidateAnswers.size()) {
             topN = allCandidateAnswers.size();
         }
@@ -200,7 +175,7 @@ public class Question {
 
     public String getText() {
         StringBuilder text = new StringBuilder();
-        for (Evidence evidence : evidences) {
+        for (Proof evidence : evidences) {
             text.append(evidence.getTitle()).append(evidence.getSnippet());
         }
         return text.toString();
@@ -214,19 +189,19 @@ public class Question {
         this.question = question;
     }
 
-    public List<Evidence> getEvidences() {
+    public List<Proof> getEvidences() {
         return this.evidences;
     }
 
-    public void addEvidences(List<Evidence> evidences) {
+    public void addEvidences(List<Proof> evidences) {
         this.evidences.addAll(evidences);
     }
 
-    public void addEvidence(Evidence evidence) {
+    public void addEvidence(Proof evidence) {
         this.evidences.add(evidence);
     }
 
-    public void removeEvidence(Evidence evidence) {
+    public void removeEvidence(Proof evidence) {
         this.evidences.remove(evidence);
     }
 
@@ -234,7 +209,7 @@ public class Question {
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append("?. ").append(question).append("\n\n");
-        for (Evidence evidence : this.evidences) {
+        for (Proof evidence : this.evidences) {
             result.append("Title: ").append(evidence.getTitle()).append("\n");
             result.append("Snippet: ").append(evidence.getSnippet()).append("\n\n");
         }
@@ -245,7 +220,7 @@ public class Question {
     public String toString(int index) {
         StringBuilder result = new StringBuilder();
         result.append("?").append(index).append(". ").append(question).append("\n\n");
-        for (Evidence evidence : this.evidences) {
+        for (Proof evidence : this.evidences) {
             result.append("Title: ").append(evidence.getTitle()).append("\n");
             result.append("Snippet: ").append(evidence.getSnippet()).append("\n\n");
         }
@@ -261,11 +236,11 @@ public class Question {
         this.expectAnswer = expectAnswer;
     }
 
-    public void setQuestionType(QuestionType questionType) {
+    public void setQuestionType(Type questionType) {
         this.questionType = questionType;
     }
 
-    public QuestionType getQuestionType() {
+    public Type getQuestionType() {
         return questionType;
     }
 

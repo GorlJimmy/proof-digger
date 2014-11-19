@@ -22,8 +22,8 @@ package org.linuxkernel.proof.digger.filter;
 
 import java.util.List;
 
-import org.linuxkernel.proof.digger.model.CandidateAnswer;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Solution;
+import org.linuxkernel.proof.digger.model.Issue;
 
 /**
  * 候选答案过滤组件
@@ -38,5 +38,5 @@ public interface CandidateAnswerFilter {
      * @param question 问题
      * @param candidateAnswers 候选答案集合
      */
-    public void filter(Question question, List<CandidateAnswer> candidateAnswers);
+    public void filter(Issue question, List<Solution> candidateAnswers);
 }

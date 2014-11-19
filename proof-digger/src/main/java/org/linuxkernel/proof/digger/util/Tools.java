@@ -55,8 +55,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.linuxkernel.proof.digger.datasource.DataSource;
 import org.linuxkernel.proof.digger.datasource.FileDataSource;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.parser.WordParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,8 +124,8 @@ public class Tools {
     public static void extractQuestions(String file) {
         //从material中提取questions
         DataSource dataSource = new FileDataSource(file);
-        List<Question> questions = dataSource.getQuestions();
-        for (Question question : questions) {
+        List<Issue> questions = dataSource.getQuestions();
+        for (Issue question : questions) {
             System.out.println(question.getQuestion().trim() + ":" + question.getExpectAnswer());
         }
     }
@@ -133,8 +133,8 @@ public class Tools {
     public static void extractPatterns(String file, String pattern) {
         //从material中提取questions
         DataSource dataSource = new FileDataSource(file);
-        List<Question> questions = dataSource.getQuestions();
-        for (Question question : questions) {
+        List<Issue> questions = dataSource.getQuestions();
+        for (Issue question : questions) {
             System.out.println(pattern + " " + question.getQuestion().trim());
         }
     }
@@ -148,11 +148,11 @@ public class Tools {
         return idf;
     }
 
-    public static List<Map.Entry<String, Integer>> initIDF(List<Question> questions) {
+    public static List<Map.Entry<String, Integer>> initIDF(List<Issue> questions) {
         map = new HashMap<>();
-        for (Question question : questions) {
-            List<Evidence> evidences = question.getEvidences();
-            for (Evidence evidence : evidences) {
+        for (Issue question : questions) {
+            List<Proof> evidences = question.getEvidences();
+            for (Proof evidence : evidences) {
                 Set<String> set = new HashSet<>();
                 List<Term> terms = WordParser.parse(evidence.getTitle() + evidence.getSnippet());
                 for (Term term : terms) {
