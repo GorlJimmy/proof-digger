@@ -23,8 +23,8 @@ package org.linuxkernel.proof.digger.score.evidence;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 
 /**
@@ -55,7 +55,7 @@ public class CombinationEvidenceScore implements EvidenceScore {
     }
 
     @Override
-    public void score(Question question, Evidence evidence) {
+    public void score(Issue question, Proof evidence) {
         for (EvidenceScore evidenceScore : evidenceScores) {
             evidenceScore.score(question, evidence);
         }

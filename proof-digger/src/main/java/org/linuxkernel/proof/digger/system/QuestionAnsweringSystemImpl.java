@@ -26,11 +26,11 @@ import java.util.List;
 import org.linuxkernel.proof.digger.datasource.DataSource;
 import org.linuxkernel.proof.digger.datasource.FileDataSource;
 import org.linuxkernel.proof.digger.files.FilesConfig;
-import org.linuxkernel.proof.digger.model.CandidateAnswer;
-import org.linuxkernel.proof.digger.model.CandidateAnswerCollection;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
-import org.linuxkernel.proof.digger.model.QuestionType;
+import org.linuxkernel.proof.digger.model.Solution;
+import org.linuxkernel.proof.digger.model.SolutionCollection;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
+import org.linuxkernel.proof.digger.model.Type;
 import org.linuxkernel.proof.digger.questiontypeanalysis.QuestionClassifier;
 import org.linuxkernel.proof.digger.score.answer.CandidateAnswerScore;
 import org.linuxkernel.proof.digger.score.answer.CombinationCandidateAnswerScore;
@@ -64,10 +64,10 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     private int questionIndex = 1;
     private double mrr;
 
-    private final List<Question> perfectQuestions = new ArrayList<>();
-    private final List<Question> notPerfectQuestions = new ArrayList<>();
-    private final List<Question> wrongQuestions = new ArrayList<>();
-    private final List<Question> unknownTypeQuestions = new ArrayList<>();
+    private final List<Issue> perfectQuestions = new ArrayList<>();
+    private final List<Issue> notPerfectQuestions = new ArrayList<>();
+    private final List<Issue> wrongQuestions = new ArrayList<>();
+    private final List<Issue> unknownTypeQuestions = new ArrayList<>();
 
     private QuestionClassifier questionClassifier;
     private DataSource dataSource;
@@ -152,8 +152,8 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     }
 
     @Override
-    public Question answerQuestion(String questionStr) {
-        Question question = dataSource.getQuestion(questionStr);
+    public Issue answerQuestion(String questionStr) {
+        Issue question = dataSource.getQuestion(questionStr);
         if (question != null) {
             return answerQuestion(question);
         }
@@ -161,14 +161,14 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     }
 
     @Override
-    public List<Question> answerQuestions() {
+    public List<Issue> answerQuestions() {
         return dataSource.getAndAnswerQuestions(this);
     }
 
     @Override
-    public Question answerQuestion(Question question) {
+    public Issue answerQuestion(Issue question) {
         if (question != null) {
-            List<Question> questions = new ArrayList<>();
+            List<Issue> questions = new ArrayList<>();
             questions.add(question);
 
             return answerQuestions(questions).get(0);
@@ -177,11 +177,11 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     }
 
     @Override
-    public List<Question> answerQuestions(List<Question> questions) {
-        for (Question question : questions) {
+    public List<Issue> answerQuestions(List<Issue> questions) {
+        for (Issue question : questions) {
             question = questionClassifier.classify(question);
             LOG.info("开始处理Question " + (questionIndex++) + "：" + question.getQuestion() + " 【问题类型：" + question.getQuestionType() + "】");
-            if (question.getQuestionType() == QuestionType.NULL) {
+            if (question.getQuestionType() == Type.NULL) {
                 unknownTypeQuestions.add(question);
                 //未知类型按回答错误处理
                 wrongQuestions.add(question);
@@ -189,7 +189,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
                 continue;
             }
             int i = 1;
-            for (Evidence evidence : question.getEvidences()) {
+            for (Proof evidence : question.getEvidences()) {
                 LOG.debug("开始处理Evidence " + (i++));
                 //对证据进行评分
                 //证据的分值存储在evidence对象里面
@@ -204,7 +204,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
                 //候选答案存储在evidence对象里面
                 candidateAnswerSelect.select(question, evidence);
                 //从evidence对象里面获得候选答案
-                CandidateAnswerCollection candidateAnswerCollection = evidence.getCandidateAnswerCollection();
+                SolutionCollection candidateAnswerCollection = evidence.getCandidateAnswerCollection();
 
                 if (!candidateAnswerCollection.isEmpty()) {
                     LOG.debug("Evidence候选答案(未评分)：");
@@ -225,7 +225,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
             LOG.info("************************************");
             LOG.info("Question " + question.getQuestion());
             LOG.info("Question 候选答案：");
-            for (CandidateAnswer candidateAnswer : question.getAllCandidateAnswer()) {
+            for (Solution candidateAnswer : question.getAllCandidateAnswer()) {
                 LOG.info(candidateAnswer.getAnswer() + "  " + candidateAnswer.getScore());
             }
             int rank = question.getExpectAnswerRank();
@@ -276,7 +276,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     public void showPerfectQuestions() {
         LOG.info("回答完美的问题：");
         int i = 1;
-        for (Question question : perfectQuestions) {
+        for (Issue question : perfectQuestions) {
             LOG.info((i++) + "、" + question.getQuestion() + " : " + question.getExpectAnswerRank());
         }
     }
@@ -285,7 +285,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     public void showNotPerfectQuestions() {
         LOG.info("回答不完美的问题：");
         int i = 1;
-        for (Question question : notPerfectQuestions) {
+        for (Issue question : notPerfectQuestions) {
             LOG.info((i++) + "、" + question.getQuestion() + " : " + question.getExpectAnswerRank());
         }
     }
@@ -294,7 +294,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     public void showWrongQuestions() {
         LOG.info("回答错误的问题：");
         int i = 1;
-        for (Question question : wrongQuestions) {
+        for (Issue question : wrongQuestions) {
             LOG.info((i++) + "、" + question.getQuestion());
         }
     }
@@ -303,28 +303,28 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     public void showUnknownTypeQuestions() {
         LOG.info("未知类型的问题：");
         int i = 1;
-        for (Question question : unknownTypeQuestions) {
+        for (Issue question : unknownTypeQuestions) {
             LOG.info((i++) + "、" + question.getQuestion());
         }
     }
 
     @Override
-    public List<Question> getPerfectQuestions() {
+    public List<Issue> getPerfectQuestions() {
         return perfectQuestions;
     }
 
     @Override
-    public List<Question> getNotPerfectQuestions() {
+    public List<Issue> getNotPerfectQuestions() {
         return notPerfectQuestions;
     }
 
     @Override
-    public List<Question> getWrongQuestions() {
+    public List<Issue> getWrongQuestions() {
         return wrongQuestions;
     }
 
     @Override
-    public List<Question> getUnknownTypeQuestions() {
+    public List<Issue> getUnknownTypeQuestions() {
         return unknownTypeQuestions;
     }
 

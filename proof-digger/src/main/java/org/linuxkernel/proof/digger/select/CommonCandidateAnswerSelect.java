@@ -26,10 +26,10 @@ import org.ansj.domain.Term;
 import org.linuxkernel.proof.digger.datasource.DataSource;
 import org.linuxkernel.proof.digger.datasource.FileDataSource;
 import org.linuxkernel.proof.digger.files.FilesConfig;
-import org.linuxkernel.proof.digger.model.CandidateAnswer;
-import org.linuxkernel.proof.digger.model.CandidateAnswerCollection;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Solution;
+import org.linuxkernel.proof.digger.model.SolutionCollection;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.parser.WordParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,13 +44,13 @@ public class CommonCandidateAnswerSelect implements CandidateAnswerSelect {
     private static final Logger LOG = LoggerFactory.getLogger(CommonCandidateAnswerSelect.class);
 
     @Override
-    public void select(Question question, Evidence evidence) {
-        CandidateAnswerCollection candidateAnswerCollection = new CandidateAnswerCollection();
+    public void select(Issue question, Proof evidence) {
+        SolutionCollection candidateAnswerCollection = new SolutionCollection();
 
         List<Term> terms = WordParser.parse(evidence.getTitle() + evidence.getSnippet());
         for (Term term : terms) {
             if (term.getNatrue().natureStr.startsWith(question.getQuestionType().getNature()) && term.getName().length() > 1) {
-                CandidateAnswer answer = new CandidateAnswer();
+                Solution answer = new Solution();
                 answer.setAnswer(term.getName());
                 candidateAnswerCollection.addAnswer(answer);
             }
@@ -63,20 +63,20 @@ public class CommonCandidateAnswerSelect implements CandidateAnswerSelect {
      */
     public static void main(String[] args) {
         DataSource dataSource = new FileDataSource(FilesConfig.personNameMaterial);
-        List<Question> questions = dataSource.getQuestions();
+        List<Issue> questions = dataSource.getQuestions();
 
         CommonCandidateAnswerSelect commonCandidateAnswerSelect = new CommonCandidateAnswerSelect();
         int i = 1;
-        for (Question question : questions) {
+        for (Issue question : questions) {
             LOG.info("Question " + (i++) + ": " + question.getQuestion());
             int j = 1;
-            for (Evidence evidence : question.getEvidences()) {
+            for (Proof evidence : question.getEvidences()) {
                 LOG.info("	Evidence " + j + ": ");
                 LOG.info("		Title: " + evidence.getTitle());
                 LOG.info("		Snippet: " + evidence.getSnippet());
                 LOG.info("	Evidence " + j + " 候选答案: ");
                 commonCandidateAnswerSelect.select(question, evidence);
-                for (CandidateAnswer candidateAnswer : evidence.getCandidateAnswerCollection().getAllCandidateAnswer()) {
+                for (Solution candidateAnswer : evidence.getCandidateAnswerCollection().getAllCandidateAnswer()) {
                     LOG.info("			" + candidateAnswer.getAnswer() + " : " + candidateAnswer.getScore());
                 }
                 j++;

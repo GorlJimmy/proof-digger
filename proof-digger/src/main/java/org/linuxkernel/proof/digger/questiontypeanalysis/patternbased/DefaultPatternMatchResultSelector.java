@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.linuxkernel.proof.digger.model.Question;
-import org.linuxkernel.proof.digger.model.QuestionType;
+import org.linuxkernel.proof.digger.model.Issue;
+import org.linuxkernel.proof.digger.model.Type;
 import org.linuxkernel.proof.digger.questiontypeanalysis.QuestionTypeTransformer;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
@@ -42,7 +42,7 @@ public class DefaultPatternMatchResultSelector implements PatternMatchResultSele
     private static final Logger LOG = LoggerFactory.getLogger(DefaultPatternMatchResultSelector.class);
 
     @Override
-    public Question select(Question question, PatternMatchResult patternMatchResult) {
+    public Issue select(Issue question, PatternMatchResult patternMatchResult) {
         List<PatternMatchResultItem> allPatternMatchResultItems = patternMatchResult.getAllPatternMatchResult();
         if (allPatternMatchResultItems == null || allPatternMatchResultItems.isEmpty()) {
             LOG.info("所有问题类型模式匹配结果为空");
@@ -56,10 +56,10 @@ public class DefaultPatternMatchResultSelector implements PatternMatchResultSele
             }
             LOG.info("处理问题类型模式：" + file.getFile() + " ，是否允许多个匹配：" + file.isMultiMatch());
             //分别统计类型的匹配次数
-            Map<QuestionType, Integer> map = new HashMap<>();
+            Map<Type, Integer> map = new HashMap<>();
             for (PatternMatchResultItem patternMatchResultItem : patternMatchResultItems) {
                 String type = patternMatchResultItem.getType();
-                QuestionType key = QuestionTypeTransformer.transform(type);
+                Type key = QuestionTypeTransformer.transform(type);
                 Integer value = map.get(key);
                 if (value == null) {
                     value = 1;
@@ -69,23 +69,23 @@ public class DefaultPatternMatchResultSelector implements PatternMatchResultSele
                 map.put(key, value);
             }
             //对类型的匹配次数进行排序
-            List<Map.Entry<QuestionType, Integer>> entrys = Tools.sortByIntegerValue(map);
+            List<Map.Entry<Type, Integer>> entrys = Tools.sortByIntegerValue(map);
             Collections.reverse(entrys);
             //是否有多个匹配
             if (entrys.size() > 1) {
                 LOG.info("\t类型\t选中数目");
-                for (Map.Entry<QuestionType, Integer> entry : entrys) {
+                for (Map.Entry<Type, Integer> entry : entrys) {
                     LOG.info("\t" + entry.getKey() + "\t" + entry.getValue());
                     question.addCandidateQuestionType(entry.getKey());
                 }
                 //是否允许多个匹配
                 if (!file.isMultiMatch()) {
                     LOG.info("找到多个匹配，不允许");
-                    question.setQuestionType(QuestionType.NULL);
+                    question.setQuestionType(Type.NULL);
                     continue;
                 }
                 LOG.info("对于允许多个匹配结果的情况，默认模式匹配结果选择器，选择匹配类型最多的");
-                QuestionType selectedType = entrys.get(0).getKey();
+                Type selectedType = entrys.get(0).getKey();
                 question.setQuestionType(selectedType);
                 //候选类型中不包括主类型
                 if (question.getCandidateQuestionTypes().contains(selectedType)) {
@@ -96,18 +96,18 @@ public class DefaultPatternMatchResultSelector implements PatternMatchResultSele
                 //只有一个匹配结果
                 LOG.info("只有一个匹配结果，匹配成功");
                 LOG.info("\t类型\t选中数目");
-                for (Map.Entry<QuestionType, Integer> entry : entrys) {
+                for (Map.Entry<Type, Integer> entry : entrys) {
                     LOG.info("\t" + entry.getKey() + "\t" + entry.getValue());
                 }
-                QuestionType selectedType = entrys.get(0).getKey();
+                Type selectedType = entrys.get(0).getKey();
                 question.setQuestionType(selectedType);
                 LOG.info("问题类型模式" + file.getFile() + "有一个匹配，【找到类型】");
                 LOG.info("找到类型，返回：" + question.getQuestionType().name());
                 return question;
             }
         }
-        LOG.info("匹配未成功，不能识别问题类型，不能识别的问题类型统一指定为："+QuestionType.PERSON_NAME);
-        question.setQuestionType(QuestionType.PERSON_NAME);
+        LOG.info("匹配未成功，不能识别问题类型，不能识别的问题类型统一指定为："+Type.PERSON_NAME);
+        question.setQuestionType(Type.PERSON_NAME);
         return question;
     }
 

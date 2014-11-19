@@ -37,7 +37,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ansj.domain.Term;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.parser.WordParser;
 import org.linuxkernel.proof.digger.questiontypeanalysis.AbstractQuestionClassifier;
 import org.linuxkernel.proof.digger.questiontypeanalysis.QuestionClassifier;
@@ -115,7 +115,7 @@ public class PatternBasedMultiLevelQuestionClassifier extends AbstractQuestionCl
     }
 
     @Override
-    public Question classify(Question question) {
+    public Issue classify(Issue question) {
         String questionStr = question.getQuestion();
         LOG.info("使用【模式匹配】的方法判断问题类型： " + questionStr);
         PatternMatchStrategy patternMatchStrategy = getPatternMatchStrategy();
@@ -414,7 +414,7 @@ public class PatternBasedMultiLevelQuestionClassifier extends AbstractQuestionCl
 
         QuestionClassifier questionClassifier = new PatternBasedMultiLevelQuestionClassifier(patternMatchStrategy, patternMatchResultSelector);
 
-        Question question = questionClassifier.classify("Who is the author of apdplat?");
+        Issue question = questionClassifier.classify("Who is the author of apdplat?");
 
         if (question != null) {
             LOG.info("问题【" + question.getQuestion() + "】的类型为：" + question.getQuestionType() + " 候选类型为：" + question.getCandidateQuestionTypes());

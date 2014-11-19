@@ -29,8 +29,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,8 +112,8 @@ public class MySQLUtils {
         }
     }
 
-    public static List<Question> getHistoryQuestionsFromDatabase() {
-        List<Question> questions = new ArrayList<>();
+    public static List<Issue> getHistoryQuestionsFromDatabase() {
+        List<Issue> questions = new ArrayList<>();
         String questionSql = "select question from question";
         Connection con = getConnection();
         if(con == null){
@@ -134,7 +134,7 @@ public class MySQLUtils {
                 if(que == null || "".equals(que.trim())){
                     continue;
                 }
-                Question question = new Question();
+                Issue question = new Issue();
                 question.setQuestion(que);
                 questions.add(question);
             }
@@ -146,8 +146,8 @@ public class MySQLUtils {
         return questions;
     }
 
-    public static List<Question> getQuestionsFromDatabase() {
-        List<Question> questions = new ArrayList<>();
+    public static List<Issue> getQuestionsFromDatabase() {
+        List<Issue> questions = new ArrayList<>();
         String questionSql = "select id,question from question";
         String evidenceSql = "select title,snippet from evidence where question=?";
         Connection con = getConnection();
@@ -165,7 +165,7 @@ public class MySQLUtils {
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String que = rs.getString(2);
-                Question question = new Question();
+                Issue question = new Issue();
                 question.setQuestion(que);
 
                 //2、查询证据
@@ -175,7 +175,7 @@ public class MySQLUtils {
                 while (rs2.next()) {
                     String title = rs2.getString(1);
                     String snippet = rs2.getString(2);
-                    Evidence evidence = new Evidence();
+                    Proof evidence = new Proof();
                     evidence.setTitle(title);
                     evidence.setSnippet(snippet);
                     //3、关联问题很证据
@@ -192,7 +192,7 @@ public class MySQLUtils {
         return questions;
     }
 
-    public static Question getQuestionFromDatabase(String pre, String questionStr) {
+    public static Issue getQuestionFromDatabase(String pre, String questionStr) {
         String questionSql = "select id,question from question where question=?";
         String evidenceSql = "select title,snippet from evidence where question=?";
         Connection con = getConnection();
@@ -210,7 +210,7 @@ public class MySQLUtils {
                 int id = rs.getInt(1);
                 //去掉前缀
                 String que = rs.getString(2).replace(pre, "");
-                Question question = new Question();
+                Issue question = new Issue();
                 question.setQuestion(que);
                 close(pst, rs);
                 //2、查询证据
@@ -220,7 +220,7 @@ public class MySQLUtils {
                 while (rs.next()) {
                     String title = rs.getString(1);
                     String snippet = rs.getString(2);
-                    Evidence evidence = new Evidence();
+                    Proof evidence = new Proof();
                     evidence.setTitle(title);
                     evidence.setSnippet(snippet);
                     //3、关联问题很证据
@@ -238,7 +238,7 @@ public class MySQLUtils {
         return null;
     }
 
-    public static void saveQuestionToDatabase(String pre, Question question) {
+    public static void saveQuestionToDatabase(String pre, Issue question) {
 		//如果问题已经保存
 
         String questionSql = "insert into question (question) values (?)";
@@ -270,7 +270,7 @@ public class MySQLUtils {
                 }
                 int i = 1;
                 ////3、保存证据
-                for (Evidence evidence : question.getEvidences()) {
+                for (Proof evidence : question.getEvidences()) {
                     try {
                         pst = con.prepareStatement(evidenceSql);
                         pst.setString(1, evidence.getTitle());
@@ -345,7 +345,7 @@ public class MySQLUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        Question question = MySQLUtils.getQuestionFromDatabase("google:", "APDPlat的发起人是谁？");
+        Issue question = MySQLUtils.getQuestionFromDatabase("google:", "APDPlat的发起人是谁？");
         if (question != null) {
             System.out.println(question);
         } else {

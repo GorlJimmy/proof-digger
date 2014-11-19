@@ -28,7 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.CommonQuestionAnsweringSystem;
 import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
 import org.slf4j.Logger;
@@ -50,23 +50,23 @@ public class ConsoleDataSource implements DataSource {
     }
 
     @Override
-    public List<Question> getQuestions() {
+    public List<Issue> getQuestions() {
         return getAndAnswerQuestions(null);
     }
 
     @Override
-    public Question getQuestion(String questionStr) {
+    public Issue getQuestion(String questionStr) {
         return null;
     }
 
     @Override
-    public List<Question> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
-        List<Question> questions = new ArrayList<>();
+    public List<Issue> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
+        List<Issue> questions = new ArrayList<>();
 
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(System.in, "utf-8"));
-            Question question = null;
+            Issue question = null;
             LOG.info("输入问题然后回车，以exit命令结束问题输入：");
             String line = reader.readLine();
             while (line != null && line.trim().length() > QUESTION_MINI_LENGTH) {
@@ -128,7 +128,7 @@ public class ConsoleDataSource implements DataSource {
     }
 
     @Override
-    public Question getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+    public Issue getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
         return null;
     }
 

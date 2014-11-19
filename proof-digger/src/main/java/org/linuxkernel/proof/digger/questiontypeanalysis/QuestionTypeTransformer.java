@@ -20,7 +20,7 @@
 
 package org.linuxkernel.proof.digger.questiontypeanalysis;
 
-import org.linuxkernel.proof.digger.model.QuestionType;
+import org.linuxkernel.proof.digger.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,22 +32,22 @@ public class QuestionTypeTransformer {
 
     private static final Logger LOG = LoggerFactory.getLogger(QuestionTypeTransformer.class);
 
-    public static QuestionType transform(String questionType) {
+    public static Type transform(String questionType) {
         LOG.debug("问题类型转换：" + questionType);
         if (questionType.contains("Person")) {
-            return QuestionType.PERSON_NAME;
+            return Type.PERSON_NAME;
         }
         if (questionType.contains("Location")) {
-            return QuestionType.LOCATION_NAME;
+            return Type.LOCATION_NAME;
         }
         if (questionType.contains("Organization")) {
-            return QuestionType.ORGANIZATION_NAME;
+            return Type.ORGANIZATION_NAME;
         }
         if (questionType.contains("Number")) {
-            return QuestionType.NUMBER;
+            return Type.NUMBER;
         }
         if (questionType.contains("Time")) {
-            return QuestionType.TIME;
+            return Type.TIME;
         }
         /**
          * 下面两种问题类型目前还不能回答
@@ -59,7 +59,7 @@ public class QuestionTypeTransformer {
         }
         */
         LOG.error("问题类型转换失败，默认人名：" + questionType);
-        return QuestionType.PERSON_NAME;
+        return Type.PERSON_NAME;
     }
 
     /**

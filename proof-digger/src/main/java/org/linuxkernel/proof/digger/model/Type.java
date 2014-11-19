@@ -24,7 +24,7 @@ package org.linuxkernel.proof.digger.model;
  * 
  * @author 杨尚川
  */
-public enum QuestionType {
+public enum Type {
 
     NULL, PERSON_NAME, LOCATION_NAME, ORGANIZATION_NAME, NUMBER, TIME, DEFINITIION, OBJECT;
 
@@ -35,26 +35,26 @@ public enum QuestionType {
         //nr2 汉语名字
         //nrj 日语人名
         //nrf 音译人名
-        if (QuestionType.PERSON_NAME == this) {
+        if (Type.PERSON_NAME == this) {
             nature = "nr";
         }
     	//ns 地名
         //nsf 音译地名
-        if (QuestionType.LOCATION_NAME == this) {
+        if (Type.LOCATION_NAME == this) {
             nature = "ns";
         }
         //nt 机构团体名
-        if (QuestionType.ORGANIZATION_NAME == this) {
+        if (Type.ORGANIZATION_NAME == this) {
             nature = "nt";
         }
 		//m 数词
         //mq 数量词
-        if (QuestionType.NUMBER == this) {
+        if (Type.NUMBER == this) {
             nature = "m";
         }
 		//t 时间词
         //tg 时间词性语素
-        if (QuestionType.TIME == this) {
+        if (Type.TIME == this) {
             nature = "t";
         }
 

@@ -20,7 +20,7 @@
 
 package org.linuxkernel.proof.digger.questiontypeanalysis;
 
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.questiontypeanalysis.patternbased.PatternMatchResultSelector;
 import org.linuxkernel.proof.digger.questiontypeanalysis.patternbased.PatternMatchStrategy;
 
@@ -34,8 +34,8 @@ public abstract class AbstractQuestionClassifier implements QuestionClassifier {
     private PatternMatchResultSelector patternMatchResultSelector;
 
     @Override
-    public Question classify(String question) {
-        Question q = new Question();
+    public Issue classify(String question) {
+        Issue q = new Issue();
         q.setQuestion(question);
         return classify(q);
     }

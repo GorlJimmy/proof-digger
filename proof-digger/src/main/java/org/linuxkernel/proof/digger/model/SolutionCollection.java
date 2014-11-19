@@ -32,10 +32,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author 杨尚川
  */
-public class CandidateAnswerCollection {
+public class SolutionCollection {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CandidateAnswerCollection.class);
-    private final List<CandidateAnswer> candidateAnswers = new ArrayList<>();
+    private static final Logger LOG = LoggerFactory.getLogger(SolutionCollection.class);
+    private final List<Solution> candidateAnswers = new ArrayList<>();
 
     public boolean isEmpty() {
         return candidateAnswers.isEmpty();
@@ -46,7 +46,7 @@ public class CandidateAnswerCollection {
      *
      * @return
      */
-    public List<CandidateAnswer> getAllCandidateAnswer() {
+    public List<Solution> getAllCandidateAnswer() {
         //按CandidateAnswer的分值排序
         Collections.sort(candidateAnswers);
         Collections.reverse(candidateAnswers);
@@ -54,20 +54,20 @@ public class CandidateAnswerCollection {
     }
 
     public void showAll() {
-        for (CandidateAnswer candidateAnswer : getAllCandidateAnswer()) {
+        for (Solution candidateAnswer : getAllCandidateAnswer()) {
             LOG.debug(candidateAnswer.getAnswer() + " " + candidateAnswer.getScore());
         }
     }
 
     public void showTopN(int topN) {
-        for (CandidateAnswer candidateAnswer : getTopNCandidateAnswer(topN)) {
+        for (Solution candidateAnswer : getTopNCandidateAnswer(topN)) {
             LOG.debug(candidateAnswer.getAnswer() + " " + candidateAnswer.getScore());
         }
     }
 
-    public List<CandidateAnswer> getTopNCandidateAnswer(int topN) {
+    public List<Solution> getTopNCandidateAnswer(int topN) {
         //按CandidateAnswer的分值排序，返回topN
-        List<CandidateAnswer> result = new ArrayList<>();
+        List<Solution> result = new ArrayList<>();
         Collections.sort(candidateAnswers);
         Collections.reverse(candidateAnswers);
         int len = candidateAnswers.size();
@@ -81,13 +81,13 @@ public class CandidateAnswerCollection {
         return result;
     }
 
-    public void addAnswer(CandidateAnswer candidateAnswer) {
+    public void addAnswer(Solution candidateAnswer) {
         if (!candidateAnswers.contains(candidateAnswer)) {
             candidateAnswers.add(candidateAnswer);
         }
     }
 
-    public void removeAnswer(CandidateAnswer candidateAnswer) {
+    public void removeAnswer(Solution candidateAnswer) {
         candidateAnswers.remove(candidateAnswer);
     }
 }

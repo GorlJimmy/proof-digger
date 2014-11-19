@@ -26,10 +26,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ansj.domain.Term;
-import org.linuxkernel.proof.digger.model.CandidateAnswer;
-import org.linuxkernel.proof.digger.model.CandidateAnswerCollection;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Solution;
+import org.linuxkernel.proof.digger.model.SolutionCollection;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
@@ -51,14 +51,14 @@ public class RewindTextualAlignmentCandidateAnswerScore implements CandidateAnsw
     }
 
     @Override
-    public void score(Question question, Evidence evidence, CandidateAnswerCollection candidateAnswerCollection) {
+    public void score(Issue question, Proof evidence, SolutionCollection candidateAnswerCollection) {
         LOG.debug("*************************");
         LOG.debug("回带文本对齐评分开始");
         //1、对问题进行分词
         List<String> questionTerms = question.getTerms();
         int questionTermsSize = questionTerms.size();
         //将每一个候选答案都放到问题的每一个位置，查找在证据中是否有匹配文本
-        for (CandidateAnswer candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
+        for (Solution candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
             //2、回带候选答案到问题，搜索GOOGLE，然后从正文获取证据文本
             String evidenceText = Tools.getRewindEvidenceText(question.getQuestion(), candidateAnswer.getAnswer());
             if (evidenceText == null) {

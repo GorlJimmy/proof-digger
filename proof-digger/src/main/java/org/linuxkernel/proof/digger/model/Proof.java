@@ -31,12 +31,12 @@ import org.linuxkernel.proof.digger.parser.WordParser;
  *
  * @author 杨尚川
  */
-public class Evidence {
+public class Proof {
 
     private String title;
     private String snippet;
     private double score = 1.0;
-    private CandidateAnswerCollection candidateAnswerCollection;
+    private SolutionCollection candidateAnswerCollection;
 
     public List<String> getTitleTerms() {
         List<String> result = new ArrayList<>();
@@ -94,11 +94,11 @@ public class Evidence {
         this.score += score;
     }
 
-    public CandidateAnswerCollection getCandidateAnswerCollection() {
+    public SolutionCollection getCandidateAnswerCollection() {
         return candidateAnswerCollection;
     }
 
-    public void setCandidateAnswerCollection(CandidateAnswerCollection candidateAnswerCollection) {
+    public void setCandidateAnswerCollection(SolutionCollection candidateAnswerCollection) {
         this.candidateAnswerCollection = candidateAnswerCollection;
     }
 }

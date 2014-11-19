@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ansj.domain.Term;
-import org.linuxkernel.proof.digger.model.CandidateAnswer;
-import org.linuxkernel.proof.digger.model.CandidateAnswerCollection;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Solution;
+import org.linuxkernel.proof.digger.model.SolutionCollection;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
@@ -51,14 +51,14 @@ public class TermDistanceMiniCandidateAnswerScore implements CandidateAnswerScor
     }
 
     @Override
-    public void score(Question question, Evidence evidence, CandidateAnswerCollection candidateAnswerCollection) {
+    public void score(Issue question, Proof evidence, SolutionCollection candidateAnswerCollection) {
         LOG.debug("*************************");
         LOG.debug("最小词距评分开始");
         //1、对问题进行分词
         List<String> questionTerms = question.getTerms();
         //2、对证据进行分词
         List<Term> terms = Tools.getTerms(evidence.getTitle() + "," + evidence.getSnippet());
-        for (CandidateAnswer candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
+        for (Solution candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
             //3、计算候选答案的词距
             int distance = 0;
             LOG.debug("计算候选答案 " + candidateAnswer.getAnswer() + " 的最小词距");

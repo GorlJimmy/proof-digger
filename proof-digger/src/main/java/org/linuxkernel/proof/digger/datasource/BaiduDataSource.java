@@ -34,8 +34,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.linuxkernel.proof.digger.files.FilesConfig;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.QuestionAnsweringSystem;
 import org.linuxkernel.proof.digger.util.MySQLUtils;
 import org.slf4j.Logger;
@@ -48,220 +48,208 @@ import org.slf4j.LoggerFactory;
  */
 public class BaiduDataSource implements DataSource {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BaiduDataSource.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BaiduDataSource.class);
 
-    private static final String ACCEPT = "text/html, */*; q=0.01";
-    private static final String ENCODING = "gzip, deflate";
-    private static final String LANGUAGE = "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3";
-    private static final String CONNECTION = "keep-alive";
-    private static final String HOST = "www.baidu.com";
-    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0";
+	private static final String ACCEPT = "text/html, */*; q=0.01";
+	private static final String ENCODING = "gzip, deflate";
+	private static final String LANGUAGE = "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3";
+	private static final String CONNECTION = "keep-alive";
+	private static final String HOST = "www.baidu.com";
+	private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0";
 
-    //获取多少页
-    private static final int PAGE = 1;
-    private static final int PAGESIZE = 10;
-    //使用摘要还是全文
-    //使用摘要
-    private static final boolean SUMMARY = true;
-    //使用全文
-    //private static final boolean SUMMARY = false;
-    private final List<String> files = new ArrayList<>();
+	private static final int PAGE = 1;
+	private static final int PAGESIZE = 10;
+	private final List<String> files = new ArrayList<>();
 
-    public BaiduDataSource() {
-    }
+	public BaiduDataSource() {
+	}
 
-    public BaiduDataSource(String file) {
-        this.files.add(file);
-    }
+	public BaiduDataSource(String file) {
+		this.files.add(file);
+	}
 
-    public BaiduDataSource(List<String> files) {
-        this.files.addAll(files);
-    }
+	public BaiduDataSource(List<String> files) {
+		this.files.addAll(files);
+	}
 
-    @Override
-    public Question getQuestion(String questionStr) {
-        return getAndAnswerQuestion(questionStr, null);
-    }
+	@Override
+	public Issue getQuestion(String questionStr) {
+		return getAndAnswerQuestion(questionStr, null);
+	}
 
-    @Override
-    public List<Question> getQuestions() {
-        return getAndAnswerQuestions(null);
-    }
+	@Override
+	public List<Issue> getQuestions() {
+		return getAndAnswerQuestions(null);
+	}
 
-    @Override
-    public List<Question> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
-        List<Question> questions = new ArrayList<>();
+	@Override
+	public List<Issue> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
+		List<Issue> questions = new ArrayList<>();
 
-        for (String file : files) {
-            BufferedReader reader = null;
-            try {
-                reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(file), "utf-8"));
-                String line = reader.readLine();
-                while (line != null) {
-                    if (line.trim().equals("") || line.trim().startsWith("#") || line.indexOf("#") == 1 || line.length() < 3) {
-                        //读下一行
-                        line = reader.readLine();
-                        continue;
-                    }
-                    LOG.info("从类路径的 " + file + " 中加载Question:" + line.trim());
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    String questionStr = null;
-                    String expectAnswer = null;
-                    String[] attrs = line.trim().split("[:|：]");
-                    if (attrs == null) {
-                        questionStr = line.trim();
-                    }
-                    if (attrs != null && attrs.length == 1) {
-                        questionStr = attrs[0];
-                    }
-                    if (attrs != null && attrs.length == 2) {
-                        questionStr = attrs[0];
-                        expectAnswer = attrs[1];
-                    }
-                    LOG.info("Question:" + questionStr);
-                    LOG.info("ExpectAnswer:" + expectAnswer);
+		for (String file : files) {
+			BufferedReader reader = null;
+			try {
+				reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(file), "utf-8"));
+				String line = reader.readLine();
+				while (line != null) {
+					if (line.trim().equals("") || line.trim().startsWith("#") || line.indexOf("#") == 1 || line.length() < 3) {
+						// 读下一行
+						line = reader.readLine();
+						continue;
+					}
+					LOG.info("从类路径的 " + file + " 中加载Question:" + line.trim());
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					String questionStr = null;
+					String expectAnswer = null;
+					String[] attrs = line.trim().split("[:|：]");
+					if (attrs == null) {
+						questionStr = line.trim();
+					}
+					if (attrs != null && attrs.length == 1) {
+						questionStr = attrs[0];
+					}
+					if (attrs != null && attrs.length == 2) {
+						questionStr = attrs[0];
+						expectAnswer = attrs[1];
+					}
+					LOG.info("Question:" + questionStr);
+					LOG.info("ExpectAnswer:" + expectAnswer);
 
-                    Question question = getQuestion(questionStr);
-                    if (question != null) {
-                        question.setExpectAnswer(expectAnswer);
-                        questions.add(question);
-                    }
+					Issue question = getQuestion(questionStr);
+					if (question != null) {
+						question.setExpectAnswer(expectAnswer);
+						questions.add(question);
+					}
 
-                    //回答问题
-                    if (questionAnsweringSystem != null && question != null) {
-                        questionAnsweringSystem.answerQuestion(question);
-                    }
+					// 回答问题
+					if (questionAnsweringSystem != null && question != null) {
+						questionAnsweringSystem.answerQuestion(question);
+					}
 
-                    //读下一行
-                    line = reader.readLine();
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            LOG.info("从Question文件" + file + "中加载Question，从baidu中检索到了 " + questions.size() + " 个Question");
-        }
-        return questions;
-    }
+					// 读下一行
+					line = reader.readLine();
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (reader != null) {
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			LOG.info("从Question文件" + file + "中加载Question，从baidu中检索到了 " + questions.size() + " 个Question");
+		}
+		return questions;
+	}
 
-    @Override
-    public Question getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
-        //1、先从本地缓存里面找
-        Question question = MySQLUtils.getQuestionFromDatabase("baidu:", questionStr);
-        if (question != null) {
-            //数据库中存在
-            LOG.info("从数据库中查询到Question：" + question.getQuestion());
-            //回答问题
-            if (questionAnsweringSystem != null) {
-                questionAnsweringSystem.answerQuestion(question);
-            }
-            return question;
-        }
-        //2、本地缓存里面没有再查询baidu
-        question = new Question();
-        question.setQuestion(questionStr);
+	@Override
+	public Issue getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+		// 1、先从本地缓存里面找
+		Issue question = MySQLUtils.getQuestionFromDatabase("baidu:", questionStr);
+		if (question != null) {
+			// 数据库中存在
+			LOG.info("从数据库中查询到Question：" + question.getQuestion());
+			// 回答问题
+			if (questionAnsweringSystem != null) {
+				questionAnsweringSystem.answerQuestion(question);
+			}
+			return question;
+		}
+		// 2、本地缓存里面没有再查询baidu
+		question = new Issue();
+		question.setQuestion(questionStr);
 
-        String query = "";
-        try {
-            query = URLEncoder.encode(question.getQuestion(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            LOG.error("url构造失败", e);
-            return null;
-        }
-        String referer = "http://www.baidu.com/";
-        for (int i = 0; i < PAGE; i++) {
-            query = "http://www.baidu.com/s?tn=monline_5_dg&ie=utf-8&wd=" + query+"&oq="+query+"&usm=3&f=8&bs="+query+"&rsv_bp=1&rsv_sug3=1&rsv_sug4=141&rsv_sug1=1&rsv_sug=1&pn=" + i * PAGESIZE;
-            LOG.debug(query);
-            List<Evidence> evidences = searchBaidu(query, referer);
-            referer = query;
-            if (evidences != null && evidences.size() > 0) {
-                question.addEvidences(evidences);
-            } else {
-                LOG.error("结果页 " + (i + 1) + " 没有搜索到结果");
-                break;
-            }
-        }
-        LOG.info("Question：" + question.getQuestion() + " 搜索到Evidence " + question.getEvidences().size() + " 条");
-        if (question.getEvidences().isEmpty()) {
-            return null;
-        }
-        //3、将baidu查询结果加入本地缓存
-        if (question.getEvidences().size() > 7) {
-            LOG.info("将Question：" + question.getQuestion() + " 加入MySQL数据库");
-            MySQLUtils.saveQuestionToDatabase("baidu:", question);
-        }
+		String query = "";
+		try {
+			query = URLEncoder.encode(question.getQuestion(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			LOG.error("url构造失败", e);
+			return null;
+		}
+		String referer = "http://www.baidu.com/";
+		for (int i = 0; i < PAGE; i++) {
+			query = "http://www.baidu.com/s?tn=monline_5_dg&ie=utf-8&wd=" + query + "&oq=" + query + "&usm=3&f=8&bs=" + query
+					+ "&rsv_bp=1&rsv_sug3=1&rsv_sug4=141&rsv_sug1=1&rsv_sug=1&pn=" + i * PAGESIZE;
+			LOG.debug(query);
+			List<Proof> evidences = searchBaidu(query, referer);
+			referer = query;
+			if (evidences != null && evidences.size() > 0) {
+				question.addEvidences(evidences);
+			} else {
+				LOG.error("结果页 " + (i + 1) + " 没有搜索到结果");
+				break;
+			}
+		}
+		LOG.info("Question：" + question.getQuestion() + " 搜索到Evidence " + question.getEvidences().size() + " 条");
+		if (question.getEvidences().isEmpty()) {
+			return null;
+		}
+		// 3、将baidu查询结果加入本地缓存
+		if (question.getEvidences().size() > 7) {
+			LOG.info("将Question：" + question.getQuestion() + " 加入MySQL数据库");
+			MySQLUtils.saveQuestionToDatabase("baidu:", question);
+		}
 
-        //回答问题
-        if (questionAnsweringSystem != null) {
-            questionAnsweringSystem.answerQuestion(question);
-        }
-        return question;
-    }
+		// 回答问题
+		if (questionAnsweringSystem != null) {
+			questionAnsweringSystem.answerQuestion(question);
+		}
+		return question;
+	}
 
-    private List<Evidence> searchBaidu(String url, String referer) {
-        List<Evidence> evidences = new ArrayList<>();
-        try {
-            Document document = Jsoup.connect(url)
-                    .header("Accept", ACCEPT)
-                    .header("Accept-Encoding", ENCODING)
-                    .header("Accept-Language", LANGUAGE)
-                    .header("Connection", CONNECTION)
-                    .header("User-Agent", USER_AGENT)
-                    .header("Host", HOST)
-                    .header("Referer", referer)
-                    .get();
-            String resultCssQuery = "html > body > div > div > div > div > div.result";
-            Elements elements = document.select(resultCssQuery);
-            for (Element element : elements) {
-                Elements subElements = element.select("h3 > a");
-                if(subElements.size() != 1){
-                    LOG.debug("没有找到标题");
-                    continue;
-                }
-                String title =subElements.get(0).text();
-                if (title == null || "".equals(title.trim())) {
-                    LOG.debug("标题为空");
-                    continue;
-                }
-                subElements = element.select("div.c-abstract");
-                if(subElements.size() != 1){
-                    LOG.debug("没有找到摘要");
-                    continue;
-                }
-                String snippet =subElements.get(0).text();
-                if (snippet == null || "".equals(snippet.trim())) {
-                    LOG.debug("摘要为空");
-                    continue;
-                }
-                Evidence evidence = new Evidence();
-                evidence.setTitle(title);
-                evidence.setSnippet(snippet);
-                
-                evidences.add(evidence);
-            }
-        } catch (Exception ex) {
-            LOG.error("搜索出错", ex);
-        }
-        return evidences;
-    }
+	private List<Proof> searchBaidu(String url, String referer) {
+		List<Proof> evidences = new ArrayList<>();
+		try {
+			Document document = Jsoup.connect(url).header("Accept", ACCEPT).header("Accept-Encoding", ENCODING).header("Accept-Language", LANGUAGE)
+					.header("Connection", CONNECTION).header("User-Agent", USER_AGENT).header("Host", HOST).header("Referer", referer).get();
+			String resultCssQuery = "html > body > div > div > div > div > div.result";
+			Elements elements = document.select(resultCssQuery);
+			for (Element element : elements) {
+				Elements subElements = element.select("h3 > a");
+				if (subElements.size() != 1) {
+					LOG.debug("没有找到标题");
+					continue;
+				}
+				String title = subElements.get(0).text();
+				if (title == null || "".equals(title.trim())) {
+					LOG.debug("标题为空");
+					continue;
+				}
+				subElements = element.select("div.c-abstract");
+				if (subElements.size() != 1) {
+					LOG.debug("没有找到摘要");
+					continue;
+				}
+				String snippet = subElements.get(0).text();
+				if (snippet == null || "".equals(snippet.trim())) {
+					LOG.debug("摘要为空");
+					continue;
+				}
+				Proof evidence = new Proof();
+				evidence.setTitle(title);
+				evidence.setSnippet(snippet);
 
-    public static void main(String args[]) {
-        Question question = new BaiduDataSource(FilesConfig.personNameQuestions).getQuestion("APDPlat的创始人是谁？");
-        LOG.info(question.toString());
-    }
+				evidences.add(evidence);
+			}
+		} catch (Exception ex) {
+			LOG.error("搜索出错", ex);
+		}
+		return evidences;
+	}
+
+	public static void main(String args[]) {
+		Issue question = new BaiduDataSource(FilesConfig.personNameQuestions).getQuestion("APDPlat的创始人是谁？");
+		LOG.info(question.toString());
+	}
 }

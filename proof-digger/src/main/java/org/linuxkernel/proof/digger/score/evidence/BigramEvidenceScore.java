@@ -23,8 +23,8 @@ package org.linuxkernel.proof.digger.score.evidence;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class BigramEvidenceScore implements EvidenceScore {
     }
 
     @Override
-    public void score(Question question, Evidence evidence) {
+    public void score(Issue question, Proof evidence) {
         LOG.debug("*************************");
         LOG.debug("Evidence 二元模型评分开始");
         //1、对问题进行分词

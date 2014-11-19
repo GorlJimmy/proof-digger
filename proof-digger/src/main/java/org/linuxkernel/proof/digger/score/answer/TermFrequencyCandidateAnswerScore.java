@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.ansj.domain.Term;
-import org.linuxkernel.proof.digger.model.CandidateAnswer;
-import org.linuxkernel.proof.digger.model.CandidateAnswerCollection;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.Solution;
+import org.linuxkernel.proof.digger.model.SolutionCollection;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.parser.WordParser;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class TermFrequencyCandidateAnswerScore implements CandidateAnswerScore {
     private static final Logger LOG = LoggerFactory.getLogger(TermFrequencyCandidateAnswerScore.class);
     private static final int TITLE_WEIGHT = 2;
     private ScoreWeight scoreWeight = new ScoreWeight();
-    private Question question;
+    private Issue question;
 
     @Override
     public void setScoreWeight(ScoreWeight scoreWeight) {
@@ -54,12 +54,12 @@ public class TermFrequencyCandidateAnswerScore implements CandidateAnswerScore {
     }
 
     @Override
-    public void score(Question question, Evidence evidence, CandidateAnswerCollection candidateAnswerCollection) {
+    public void score(Issue question, Proof evidence, SolutionCollection candidateAnswerCollection) {
         LOG.debug("*************************");
         LOG.debug("词频评分开始");
         this.question = question;
         Map<String, Integer> map = getWordFrequency(evidence.getTitle(), evidence.getSnippet());
-        for (CandidateAnswer candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
+        for (Solution candidateAnswer : candidateAnswerCollection.getAllCandidateAnswer()) {
             Integer wordFrequency = map.get(candidateAnswer.getAnswer());
             if (wordFrequency == null) {
                 LOG.debug("没有找到候选答案【" + candidateAnswer.getAnswer() + "】的词频信息");

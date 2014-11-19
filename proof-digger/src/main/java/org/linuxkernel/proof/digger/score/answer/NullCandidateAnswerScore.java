@@ -20,9 +20,9 @@
 
 package org.linuxkernel.proof.digger.score.answer;
 
-import org.linuxkernel.proof.digger.model.CandidateAnswerCollection;
-import org.linuxkernel.proof.digger.model.Evidence;
-import org.linuxkernel.proof.digger.model.Question;
+import org.linuxkernel.proof.digger.model.SolutionCollection;
+import org.linuxkernel.proof.digger.model.Proof;
+import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.system.ScoreWeight;
 
 /**
@@ -32,8 +32,8 @@ import org.linuxkernel.proof.digger.system.ScoreWeight;
 public class NullCandidateAnswerScore implements CandidateAnswerScore {
 
     @Override
-    public void score(Question question, Evidence evidence,
-            CandidateAnswerCollection candidateAnswerCollection) {
+    public void score(Issue question, Proof evidence,
+            SolutionCollection candidateAnswerCollection) {
         // TODO Auto-generated method stub
 
     }
