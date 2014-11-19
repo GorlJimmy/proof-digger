@@ -53,6 +53,7 @@ public class MySQLUtils {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
+        	
             LOG.error("MySQL驱动加载失败：", e);
         }
     }
