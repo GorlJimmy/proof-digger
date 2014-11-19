@@ -83,7 +83,7 @@ public class ValidateMainPartExtracter {
     public static void validate() {
         MainPartExtracter mainPartExtracter = new MainPartExtracter();
         String file = "/org/apdplat.qa/questiontypeanalysis/AllTestQuestionsWithMainPart.txt";
-        Set<String> questionStr = Tools.getQuestions(file);
+        Set<String> questionStr = Tools.getIssues(file);
         LOG.info("从文件中加载" + questionStr.size() + "个问题：" + file);
         List<QuestionStructure> questions = parseQuestions(questionStr);
         LOG.info("从标注的问句语料库中加载" + questionStr.size() + "条记录");

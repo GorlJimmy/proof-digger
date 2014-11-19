@@ -64,7 +64,6 @@ public class GoogleDataSource implements DataSource {
 	@Override
 	public List<Issue> getAndAnswerQuestions(IssueSolutionSystem questionAnsweringSystem) {
 		List<Issue> questions = new ArrayList<>();
-
 		for (String file : files) {
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(file), "utf-8"));) {
 
@@ -157,7 +156,6 @@ public class GoogleDataSource implements DataSource {
 		}
 		_searchTimes++;
 
-		// 回答问题
 		if (questionAnsweringSystem != null) {
 			questionAnsweringSystem.answerQuestion(question);
 		}
@@ -165,11 +163,10 @@ public class GoogleDataSource implements DataSource {
 	}
 
 	private List<Proof> search(String query) {
-		List<Proof> evidences = new ArrayList<>();
+		List<Proof> proofs = new ArrayList<>();
 		try {
 			HttpClient httpClient = new HttpClient();
 
-			// PostMethod post=new PostMethod();
 			GetMethod getMethod = new GetMethod(query);
 
 			getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
@@ -190,20 +187,19 @@ public class GoogleDataSource implements DataSource {
 
 			_LOG.debug(" Results:");
 			for (int i = 0; i < results.length(); i++) {
-				Proof evidence = new Proof();
+				Proof proof = new Proof();
 				JSONObject result = results.getJSONObject(i);
 				String title = result.getString("titleNoFormatting");
 				_LOG.debug(title);
-				evidence.setTitle(title);
+				proof.setTitle(title);
 				if (SUMMARY) {
 					String content = result.get("content").toString();
 					content = content.replaceAll("<b>", "");
 					content = content.replaceAll("</b>", "");
 					content = content.replaceAll("\\.\\.\\.", "");
 					_LOG.debug(content);
-					evidence.setSnippet(content);
+					proof.setSnippet(content);
 				} else {
-					// 从URL中提取正文
 					String url = result.get("url").toString();
 					String content = Tools.getHTMLContent(url);
 					if (content == null) {
@@ -212,15 +208,15 @@ public class GoogleDataSource implements DataSource {
 						content = content.replaceAll("</b>", "");
 						content = content.replaceAll("\\.\\.\\.", "");
 					}
-					evidence.setSnippet(content);
+					proof.setSnippet(content);
 					_LOG.debug(content);
 				}
-				evidences.add(evidence);
+				proofs.add(proof);
 			}
 		} catch (Exception e) {
 			_LOG.error("执行搜索失败：", e);
 		}
-		return evidences;
+		return proofs;
 	}
 
 	public static void main(String args[]) {

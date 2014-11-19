@@ -127,7 +127,7 @@ public class BestClassifierSearcher {
         PatternMatchResultSelector patternMatchResultSelector = new DefaultPatternMatchResultSelector();
         QuestionClassifier questionClassifier = new PatternBasedMultiLevelQuestionClassifier(patternMatchStrategy, patternMatchResultSelector);
         String file = "/org/apdplat.qa/questiontypeanalysis/AllTestQuestions.txt";
-        Set<String> questions = Tools.getQuestions(file);
+        Set<String> questions = Tools.getIssues(file);
         LOG.info("从文件中加载" + questions.size() + "个问题：" + file);
         List<String> no = new ArrayList<String>();
         List<String> wrong = new ArrayList<String>();
@@ -227,14 +227,10 @@ public class BestClassifierSearcher {
      * @param args
      */
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
         //寻找最佳组合
         classify();
         //运行特定组合
         classify2();
-        long cost = System.currentTimeMillis() - start;
-        LOG.info("");
-        LOG.info("执行时间：" + Tools.getTimeDes(cost));
     }
 
 }

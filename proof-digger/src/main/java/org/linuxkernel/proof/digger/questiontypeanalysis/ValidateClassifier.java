@@ -66,7 +66,7 @@ public class ValidateClassifier {
 
     private static void validate(String filePrefix, Type rightQuestionType) {
         String file = "/org/apdplat.qa/questiontypeanalysis/" + filePrefix + "_name_questions.txt";
-        Set<String> questions = Tools.getQuestions(file);
+        Set<String> questions = Tools.getIssues(file);
         LOG.info("从文件中加载" + questions.size() + "个问题：" + file);
 
         for (String q : questions) {
