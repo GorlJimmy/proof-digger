@@ -56,18 +56,17 @@ public class FileDataSource implements DataSource {
     }
 
     @Override
-    public List<Issue> getQuestions() {
-        return getAndAnswerQuestions(null);
-    }
+	public Issue getIssue(String questionStr) {
+		return getAndAnswerQuestion(questionStr, null);
+	}
 
-    @Override
-    public Issue getQuestion(String questionStr) {
-        return getAndAnswerQuestion(questionStr, null);
-    }
-
+	@Override
+	public List<Issue> getIssues() {
+		return getAndAnswerQuestions(null);
+	}
     @Override
     public Issue getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
-        for (Issue question : getQuestions()) {
+        for (Issue question : getIssues()) {
             String q = question.getQuestion().trim().replace("?", "").replace("？", "");
             questionStr = questionStr.trim().replace("?", "").replace("？", "");
             if (q.equals(questionStr)) {
@@ -173,11 +172,11 @@ public class FileDataSource implements DataSource {
      */
     public static void main(String[] args) {
         DataSource dataSource = new FileDataSource(FilesConfig.personNameMaterial);
-        List<Issue> questions = dataSource.getQuestions();
+        List<Issue> questions = dataSource.getIssues();
         for (Issue question : questions) {
             LOG.info(question.toString());
         }
-        Issue question = dataSource.getQuestion("APDPlat的发起人是谁？");
+        Issue question = dataSource.getIssue("APDPlat的发起人是谁？");
         QuestionAnsweringSystem questionAnsweringSystem = new CommonQuestionAnsweringSystem();
         questionAnsweringSystem.answerQuestion(question);
     }

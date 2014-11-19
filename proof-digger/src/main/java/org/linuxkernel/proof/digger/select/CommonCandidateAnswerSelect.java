@@ -63,7 +63,7 @@ public class CommonCandidateAnswerSelect implements CandidateAnswerSelect {
      */
     public static void main(String[] args) {
         DataSource dataSource = new FileDataSource(FilesConfig.personNameMaterial);
-        List<Issue> questions = dataSource.getQuestions();
+        List<Issue> questions = dataSource.getIssues();
 
         CommonCandidateAnswerSelect commonCandidateAnswerSelect = new CommonCandidateAnswerSelect();
         int i = 1;

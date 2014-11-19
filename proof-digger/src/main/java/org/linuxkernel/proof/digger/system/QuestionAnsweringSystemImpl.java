@@ -153,7 +153,7 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
 
     @Override
     public Issue answerQuestion(String questionStr) {
-        Issue question = dataSource.getQuestion(questionStr);
+        Issue question = dataSource.getIssue(questionStr);
         if (question != null) {
             return answerQuestion(question);
         }

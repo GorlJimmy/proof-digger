@@ -44444,3 +44444,518 @@ java.io.FileNotFoundException: \Users\apple\.m2\repository\org\apdplat\deep-qa\1
 	at org.apdplat.qa.util.ZipUtils.unZip(ZipUtils.java:63) [classes/:na]
 	at org.apdplat.qa.util.ZipUtils.main(ZipUtils.java:174) [classes/:na]
 没有从数据库中查询到问题：APDPlat的发起人是谁？
+MySQL获取数据库连接失败：
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1116) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:344) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2332) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2369) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2153) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:792) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47) ~[mysql-connector-java-5.1.18.jar:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:381) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:305) ~[mysql-connector-java-5.1.18.jar:na]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getConnection(MySQLUtils.java:305) [classes/:na]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getQuestionFromDatabase(MySQLUtils.java:198) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.getAndAnswerQuestion(BaiduDataSource.java:159) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.getIssue(BaiduDataSource.java:77) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.main(BaiduDataSource.java:252) [classes/:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method) ~[na:1.7.0_45]
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.PlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.SocksSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:257) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:294) ~[mysql-connector-java-5.1.18.jar:na]
+	... 19 common frames omitted
+Question：APDPlat的创始人是谁？ 搜索到Evidence 9 条
+将Question：APDPlat的创始人是谁？ 加入MySQL数据库
+MySQL获取数据库连接失败：
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1116) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:344) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2332) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2369) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2153) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:792) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47) ~[mysql-connector-java-5.1.18.jar:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:381) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:305) ~[mysql-connector-java-5.1.18.jar:na]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getConnection(MySQLUtils.java:305) [classes/:na]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.saveQuestionToDatabase(MySQLUtils.java:246) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.getAndAnswerQuestion(BaiduDataSource.java:201) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.getIssue(BaiduDataSource.java:77) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.main(BaiduDataSource.java:252) [classes/:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method) ~[na:1.7.0_45]
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.PlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.SocksSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:257) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:294) ~[mysql-connector-java-5.1.18.jar:na]
+	... 19 common frames omitted
+?. APDPlat的创始人是谁？
+
+Title: 杨尚川的微博_腾讯微博
+Snippet: 系统架构设计师_系统分析师_APDPlat开源项目创始人_资深Nutch搜索引擎专... 私信 更多 612广播 98收听 352听众 全部广播 相册 关于他 收听/听众 在他的广播...
+
+Title: 杨尚川的微博_微博
+Snippet: 系统架构设计师_系统分析师_APDPlat开源项目创始人_资深Nutch搜索引擎专家 |浙江 杭州 杨尚川 160 关注 266 粉丝 338 微博 他的主页 微博 个人资料 相册...
+
+Title: Java应用级产品开发平台APDPlat作者杨尚川专访 - 名家访谈 - IT...
+Snippet: APDPlat是Application Product Development Platform的缩写,意为应用级产品开发平台... FineUI创始人三生石上在CSDN发了帖子 CSDN的《2013年度中国优秀开源项目评选》...
+
+Title: 杨尚川,新浪微博_杨尚川的微博_微博
+Snippet: 杨尚川 http://weibo.com/apdplat 系统架构设计师_系统分析师_APDPlat开源项目创始人_资深Nutch搜索引擎专家 |浙江 杭州 杨尚川 ...
+
+Title: steveguoshao/APDPlat/file_diff/2147b3025664...
+Snippet: <groupId>org.apdplat</groupId> <artifactId>APDPlat_Core</artifactId> <...(框架创始人)</name> <post>yang-shangchuan@qq.com</post> </mailingList...
+
+Title: 网络软件 | 找人才 | CSTO-全球最大的中文软件外包和项目交易平台
+Snippet: 基本情况: 【自由职业者】系统架构设计师_系统分析师_APDPlat开源项目创始人_资深Nutch搜索引擎专家 特长: 1、曾研读了nutch1.2的全部源代码和lucene、tomcat的...
+
+Title: java在线视频教程-领悟书生java教程网
+Snippet: 杨尚川,系统架构设计师、系统分析师、资深Nutch搜索引擎专家,APDPlat开源项目创始人(https://github.com/ysc/APDPlat)【第四部分20130907更新】java CMS(内容管理...
+
+Title: 杨尚川_Tencent Weibo
+Snippet: 系统架构设计师_系统分析师_APDPlat开源项目创始人_资深Nutch搜索引擎专... @He Private Messages More 609Posts 98Following 342Followers 全部广播 关于He ...
+
+Title: steveguoshao/APDPlat/file_diff/e8d150f90a5d2c62ae4c8ec0ee27...
+Snippet: 34</version> <name>APDPlat_Core</name> <url>https://github.com/ysc/...(框架创始人)</name> <post>yang-shangchuan@qq.com</post> </mailingList...
+
+
+MySQL获取数据库连接失败：
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1116) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:344) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2332) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2369) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2153) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:792) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47) ~[mysql-connector-java-5.1.18.jar:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:381) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:305) ~[mysql-connector-java-5.1.18.jar:na]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getConnection(MySQLUtils.java:305) [classes/:na]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getQuestionFromDatabase(MySQLUtils.java:198) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.getAndAnswerQuestion(BaiduDataSource.java:159) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.getIssue(BaiduDataSource.java:77) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.main(BaiduDataSource.java:252) [classes/:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method) ~[na:1.7.0_45]
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.PlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.SocksSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:257) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:294) ~[mysql-connector-java-5.1.18.jar:na]
+	... 19 common frames omitted
+Question：北京大学校长是谁？ 搜索到Evidence 8 条
+将Question：北京大学校长是谁？ 加入MySQL数据库
+MySQL获取数据库连接失败：
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1116) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:344) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2332) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2369) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2153) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:792) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47) ~[mysql-connector-java-5.1.18.jar:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:381) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:305) ~[mysql-connector-java-5.1.18.jar:na]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getConnection(MySQLUtils.java:305) [classes/:na]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.saveQuestionToDatabase(MySQLUtils.java:246) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.getAndAnswerQuestion(BaiduDataSource.java:201) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.getIssue(BaiduDataSource.java:77) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.BaiduDataSource.main(BaiduDataSource.java:252) [classes/:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method) ~[na:1.7.0_45]
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.PlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.SocksSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:257) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:294) ~[mysql-connector-java-5.1.18.jar:na]
+	... 19 common frames omitted
+?. 北京大学校长是谁？
+
+Title: 北京大学校长是谁?_天涯问答
+Snippet: 最佳答案: 校长： 周其凤
+
+Title: 现在北京大学校长是谁?
+Snippet: 中国科学院院士,教授,博士生导师,2008年11月开始担任北京大学校长。 1965年入北京大学化学系学习,1970年留校任教。1978年考取北京大学化学系高分子化学专业研究生,...
+
+Title: 现任北大校长是谁?_灵昊_新浪博客
+Snippet: 美国哥伦比亚大学教育学博士,曾任国民政府第一任教育部长、行政院秘书长,长期担任北京大学校长。先后担任过国民政府教育部部长、北京大学校长、行政院秘书长、中国...
+
+Title: 谁是北大校长?_百度知道
+Snippet: 美国哥伦比亚大学教育学博士,曾任国民政府第一任教育部长、行政院秘书长,长期担任北京大学校长。先后担任过国民政府教育部部长、北京大学校长、行政院秘书长、中国...
+
+Title: 北京大学校长是谁?_百度知道
+Snippet: 北京大学校长是谁?按默认排序 | 按时间排序 最佳回答 2009-07-08 271298 | 十四级 党委书记: 闵维方 校长: 周其凤 党委常务副书记: 吴志攀 常务副校长:...
+
+Title: 北京大学现在的校长是谁啊?
+Snippet: 现任北大校长是谁 满意答案网友回答 2014-11-10 历届北大校长是:孙家鼐(1898.7---1900.春)许景澄(1900.春---1900.8)张百熙(1902.1---1904.1)张亨嘉(190...
+
+Title: 北京大学校长列表 - 维基百科,自由的百科全书
+Snippet: (重定向自北京大学历任校长列表)跳转至: 导航、 搜索 北京大学(简称北大)是中国著名高等学府。北京大学创建于1898年,其历任校长别表如下[1]:...
+
+Title: 北大历任校长是谁?其官职是什么级别? - 红网问答
+Snippet: 北大历任校长是谁?其官职是什么级别? - 在我的记忆中,有三位北京大学校长令我印象很深刻。一位是许智宏。时任北大校长时,他演唱的一首《隐形的翅膀》引起了...
+
+
+MySQL获取数据库连接失败：
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1116) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:344) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2332) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2369) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2153) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:792) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47) ~[mysql-connector-java-5.1.18.jar:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:381) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:305) ~[mysql-connector-java-5.1.18.jar:na]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getConnection(MySQLUtils.java:305) [classes/:na]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getQuestionFromDatabase(MySQLUtils.java:198) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.getAndAnswerQuestion(GoogleDataSource.java:152) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.getIssue(GoogleDataSource.java:61) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.main(GoogleDataSource.java:261) [classes/:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method) ~[na:1.7.0_45]
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.PlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.SocksSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:257) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:294) ~[mysql-connector-java-5.1.18.jar:na]
+	... 19 common frames omitted
+搜索返回记录数： 125
+Question：APDPlat的发起人是谁？ 搜索到Evidence 8 条
+将Question：APDPlat的发起人是谁？ 加入MySQL数据库
+MySQL获取数据库连接失败：
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1116) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:344) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2332) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2369) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2153) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:792) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47) ~[mysql-connector-java-5.1.18.jar:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:381) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:305) ~[mysql-connector-java-5.1.18.jar:na]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getConnection(MySQLUtils.java:305) [classes/:na]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.saveQuestionToDatabase(MySQLUtils.java:246) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.getAndAnswerQuestion(GoogleDataSource.java:190) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.getIssue(GoogleDataSource.java:61) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.main(GoogleDataSource.java:261) [classes/:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method) ~[na:1.7.0_45]
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.PlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.SocksSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:257) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:294) ~[mysql-connector-java-5.1.18.jar:na]
+	... 19 common frames omitted
+?. APDPlat的发起人是谁？
+
+Title: QuestionAnsweringSystem v1.1 发布，人机问答系统- 杨尚川的博客 ...
+Snippet: 2014年8月7日  1、人名如： APDPlat的作者是谁？ APDPlat的发起人是谁？ 谁死后布了七十二疑冢
+？ 杨尚川最爱的女人是谁？ 2、地名如： “海的女儿”是哪个城市的 
+
+Title: 杨尚川_百度百科
+Snippet: 系统架构设计师，系统分析师，2013年度优秀开源项目APDPlat发起人，资深Nutch
+搜索引擎专家
+
+Title: 人机问答系统演示
+Snippet: 人机问答系统演示项目主页. 请输入问题且长度大于3. 可以像如下提问： 1、APDPlat
+的作者是谁？ 2、APDPlat的发起人是谁？ 3、谁死后布了七十二疑冢？ 4、习近平 
+
+Title: 其他用户曾经问过的问题
+Snippet: 121 、 2、APDPlat的发起人是谁, 简要答案 · 详细答案. 122 、 2、APDPlat的发起人
+是谁2、APDPlat的发起人是谁, 简要答案 · 详细答案. 123 、 2的100次方等于多少 
+
+Title: 第八届开源中国开源世界高峰论坛-日程安排
+Snippet: 开源群英会”特别邀请国内知名开源项目发起人、活跃的开源布道师、有影响力的开源 
+ 发起人; 杨尚川：APDPlat项目发起人; 余杰：UbuntuKylin开源操作系统负责人 
+
+Title: 开源力量公开课第31期-Nutch,从搜索引擎到网络爬虫-杨尚川_文档 ...
+Snippet: 2013年11月6日   顾问，专注于大数据和搜索引擎2013年度优秀开源项目APDPlat发起人ysc@
+apdplat.org 2 www.osforce.cn 大纲： 1、Nutch是什么2、Nutch可以做 
+
+Title: Nutch:从搜索引擎到网络爬虫- 开源力量丨向IT技术大牛们学习！ - 大 ...
+Snippet: 课程背景：Nutch诞生于2002年8月，是Apache旗下的一个用Java实现的开源  师，
+系统分析师，2013年度优秀开源项目APDPlat发起人，资深Nutch搜索引擎专家.
+
+Title: 开源力量新版在线学习网站开通啦！ 我们同期开放了... - 豆瓣
+Snippet: 2014年2月7日  潘志彪比特基金首席技术顾问讲“为什么比特币技术上是靠谱的”  杨尚川2013年度
+优秀开源项目APDPlat发起人，资深Nutch搜索引擎专家 
+
+
+MySQL获取数据库连接失败：
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1116) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:344) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2332) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2369) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2153) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:792) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47) ~[mysql-connector-java-5.1.18.jar:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:381) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:305) ~[mysql-connector-java-5.1.18.jar:na]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getConnection(MySQLUtils.java:305) [classes/:na]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getQuestionFromDatabase(MySQLUtils.java:198) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.getAndAnswerQuestion(GoogleDataSource.java:152) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.getIssue(GoogleDataSource.java:61) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.main(GoogleDataSource.java:261) [classes/:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method) ~[na:1.7.0_45]
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.PlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.SocksSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:257) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:294) ~[mysql-connector-java-5.1.18.jar:na]
+	... 19 common frames omitted
+搜索返回记录数： 309000
+Question：北京大学校长是谁？ 搜索到Evidence 8 条
+将Question：北京大学校长是谁？ 加入MySQL数据库
+MySQL获取数据库连接失败：
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1116) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:344) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2332) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2369) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2153) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:792) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47) ~[mysql-connector-java-5.1.18.jar:na]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at java.lang.reflect.Constructor.newInstance(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:381) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:305) ~[mysql-connector-java-5.1.18.jar:na]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at java.sql.DriverManager.getConnection(Unknown Source) ~[na:1.7.0_45]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.getConnection(MySQLUtils.java:305) [classes/:na]
+	at org.linuxkernel.proof.digger.util.MySQLUtils.saveQuestionToDatabase(MySQLUtils.java:246) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.getAndAnswerQuestion(GoogleDataSource.java:190) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.getIssue(GoogleDataSource.java:61) [classes/:na]
+	at org.linuxkernel.proof.digger.datasource.GoogleDataSource.main(GoogleDataSource.java:261) [classes/:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method) ~[na:1.7.0_45]
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.PlainSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.SocksSocketImpl.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at java.net.Socket.<init>(Unknown Source) ~[na:1.7.0_45]
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:257) ~[mysql-connector-java-5.1.18.jar:na]
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:294) ~[mysql-connector-java-5.1.18.jar:na]
+	... 19 common frames omitted
+?. 北京大学校长是谁？
+
+Title: 王恩哥任北京大学校长—新闻—科学网
+Snippet: 2013年3月22日  北大校长回应个人争议称有自己性格不想改 · 北大校长给母亲写  引用：“哈佛大学
+校长是共和党中央还是民主党中央任命的，谁知道？” 哈佛校董会 
+
+Title: 北京大学校长列表- 维基百科，自由的百科全书
+Snippet: 北京大学创建于1898年，其历任校长别表如下：. 目录. [隐藏]. 1 历任校长. 1.1 清朝
+京師大學堂時期; 1.2 中華民國北洋政府國立北京大學時期; 1.3 被合并、撤销 
+
+Title: 北京大学- 维基百科，自由的百科全书
+Snippet: 如今北京大学是一所兼具自然科学、人文学科、社会科学、医学以及新型工科的综合
+性 . 1916年12月26日，蔡元培出任北京大学校长。1916年至1927年，蔡元培担任 
+
+Title: 现任北大校长是谁？_灵昊_新浪博客
+Snippet: 2012年9月1日  现任、历任北大校长. xiaoge4001. 一 蔡元培蔡元培（1868~1教育论著有《蔡元培
+教育文选》、《蔡元培教育论著选》等。 二 蒋梦麟（1886－1964）原名 
+
+Title: 王恩哥任北京大学校长周其凤卸任（全文）_网易校园 - 网易校园频道
+Snippet: 2013年3月22日  核心提示：3月22日，中共中央组织部副部长潘立刚在北京大学宣布了中共中央、
+国务院的任免决定，王恩哥担任北京大学校长(副部长级)；因年龄原因，周其凤不再
+担任北京大学校长职务。  新华社就女老师被打发问:老爷是谁.
+
+Title: 北大校长周其凤老婆是谁?周其凤女儿照片_生肖_奇丽女性网
+Snippet: 2013年3月4日  以上介绍了北大校长周其凤老婆资料信息,并搜集了周其凤女儿照片~. 来自原文:奇  
+张嘉倪现任男友是谁男友帅气浪漫求婚现场照曝光 · 张嘉倪现任 
+
+Title: 北京大学_百度百科
+Snippet: 北大是中国近代唯一以最高学府身份创立的学校，最初也是国家最高教育行政机关  
+1916年12月，蔡元培出任北京大学校长。1916年至1927年，蔡元培担任北大校长 
+
+Title: 北大校长跪母祝寿为何惹非议_评论频道_凤凰网
+Snippet: 2012年7月16日  记得改革开放之初，大学和科研单位里，教授和科研人员最受尊敬，搞行政“没面子”，
+现在都是谁有行政职务谁牛X。连北大都沦陷了，让人悲哀。 [详细] 
+
+
+开始构造问答系统
+模型：models/chineseFactored.ser.gz
+模式文件目录：/C:/Users/Engss/git/proof-digger/proof-digger/target/classes/questionTypePatterns/
+模式匹配策略启用文件：QuestionTypePatternsLevel1_true.txt
+模式匹配策略启用文件：QuestionTypePatternsLevel2_true.txt
+模式匹配策略启用文件：QuestionTypePatternsLevel3_true.txt
+	模式文件：QuestionTypePatternsLevel1_true.txt
+	是否允许多匹配：true
+	模式文件：QuestionTypePatternsLevel2_true.txt
+	是否允许多匹配：true
+	模式文件：QuestionTypePatternsLevel3_true.txt
+	是否允许多匹配：true
+问答系统构造完成
+输入问题然后回车，以exit命令结束问题输入：
+回答完美的问题：
+回答不完美的问题：
+回答错误的问题：

@@ -73,12 +73,12 @@ public class BaiduDataSource implements DataSource {
 	}
 
 	@Override
-	public Issue getQuestion(String questionStr) {
-		return getAndAnswerQuestion(questionStr, null);
+	public Issue getIssue(String str_issue) {
+		return getAndAnswerQuestion(str_issue, null);
 	}
 
 	@Override
-	public List<Issue> getQuestions() {
+	public List<Issue> getIssues() {
 		return getAndAnswerQuestions(null);
 	}
 
@@ -119,7 +119,7 @@ public class BaiduDataSource implements DataSource {
 					LOG.info("Question:" + questionStr);
 					LOG.info("ExpectAnswer:" + expectAnswer);
 
-					Issue question = getQuestion(questionStr);
+					Issue question = getIssue(questionStr);
 					if (question != null) {
 						question.setExpectAnswer(expectAnswer);
 						questions.add(question);
@@ -249,7 +249,7 @@ public class BaiduDataSource implements DataSource {
 	}
 
 	public static void main(String args[]) {
-		Issue question = new BaiduDataSource(FilesConfig.personNameQuestions).getQuestion("APDPlat的创始人是谁？");
+		Issue question = new BaiduDataSource(FilesConfig.personNameQuestions).getIssue("北京大学校长是谁？");
 		LOG.info(question.toString());
 	}
 }

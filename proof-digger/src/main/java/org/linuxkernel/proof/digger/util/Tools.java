@@ -124,7 +124,7 @@ public class Tools {
     public static void extractQuestions(String file) {
         //从material中提取questions
         DataSource dataSource = new FileDataSource(file);
-        List<Issue> questions = dataSource.getQuestions();
+        List<Issue> questions = dataSource.getIssues();
         for (Issue question : questions) {
             System.out.println(question.getQuestion().trim() + ":" + question.getExpectAnswer());
         }
@@ -133,7 +133,7 @@ public class Tools {
     public static void extractPatterns(String file, String pattern) {
         //从material中提取questions
         DataSource dataSource = new FileDataSource(file);
-        List<Issue> questions = dataSource.getQuestions();
+        List<Issue> questions = dataSource.getIssues();
         for (Issue question : questions) {
             System.out.println(pattern + " " + question.getQuestion().trim());
         }

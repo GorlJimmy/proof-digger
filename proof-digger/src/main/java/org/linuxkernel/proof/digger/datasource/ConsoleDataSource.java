@@ -50,12 +50,12 @@ public class ConsoleDataSource implements DataSource {
     }
 
     @Override
-    public List<Issue> getQuestions() {
+    public List<Issue> getIssues() {
         return getAndAnswerQuestions(null);
     }
 
     @Override
-    public Issue getQuestion(String questionStr) {
+    public Issue getIssue(String questionStr) {
         return null;
     }
 
@@ -93,7 +93,7 @@ public class ConsoleDataSource implements DataSource {
                     LOG.info("ExpectAnswer:" + expectAnswer);
                     //获取证据
                     //构造问题
-                    question = dataSource.getQuestion(questionStr);
+                    question = dataSource.getIssue(questionStr);
                     if (question == null) {
                         LOG.error("未成功检索到问题相关证据");
                     } else {
