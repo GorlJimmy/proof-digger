@@ -44,7 +44,7 @@ public class MySQLUtils {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     // 防止出现Java中连接数据库时汉字都变成问号问题
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/questionanswer?useUnicode=true&characterEncoding=utf8";
+    private static final String URL = "jdbc:mysql://linuxkernel.org.cn:3306/questionanswer?useUnicode=true&characterEncoding=utf8";
     //private static final String URL = "jdbc:mysql://127.0.0.1:3306/questionanswer_fulltext";
     private static final String USER = "linuxpku";
     private static final String PASSWORD = "linux4pkuss";

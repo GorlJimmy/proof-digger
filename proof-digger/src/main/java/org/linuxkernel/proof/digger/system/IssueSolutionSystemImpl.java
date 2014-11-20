@@ -57,9 +57,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author 杨尚川
  */
-public class QuestionAnsweringSystemImpl implements IssueSolutionSystem {
+public class IssueSolutionSystemImpl implements IssueSolutionSystem {
 
-    private static final Logger LOG = LoggerFactory.getLogger(QuestionAnsweringSystemImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IssueSolutionSystemImpl.class);
 
     private int questionIndex = 1;
     private double mrr;
@@ -391,7 +391,7 @@ public class QuestionAnsweringSystemImpl implements IssueSolutionSystem {
         //combinationCandidateAnswerScore.addCandidateAnswerScore(rewindTextualAlignmentCandidateAnswerScore);
         combinationCandidateAnswerScore.addCandidateAnswerScore(hotCandidateAnswerScore);
 
-        IssueSolutionSystem questionAnsweringSystem = new QuestionAnsweringSystemImpl();
+        IssueSolutionSystem questionAnsweringSystem = new IssueSolutionSystemImpl();
         questionAnsweringSystem.setDataSource(dataSource);
         questionAnsweringSystem.setCandidateAnswerSelect(candidateAnswerSelect);
         questionAnsweringSystem.setEvidenceScore(combinationEvidenceScore);

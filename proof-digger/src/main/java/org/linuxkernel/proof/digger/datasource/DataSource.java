@@ -15,7 +15,7 @@ public interface DataSource {
     public Issue getIssue(String str_issue);
 
     
-    public List<Issue> getAndAnswerQuestions(IssueSolutionSystem questionAnsweringSystem);
+    public  List<Issue>  getAndAnswerQuestions(IssueSolutionSystem questionAnsweringSystem);
 
     public Issue getAndAnswerQuestion(String questionStr, IssueSolutionSystem questionAnsweringSystem);
 

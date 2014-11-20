@@ -142,12 +142,12 @@ public class Tools {
 	}
 
 	public static String getHTMLContent(String url) {
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream()))) {
+
 			StringBuilder html = new StringBuilder();
 			String line = reader.readLine();
 			while (line != null) {
-				html.append(line).append("\n");
+				html.append(line).append("\r\n");
 				line = reader.readLine();
 			}
 			String content = TextExtract.parse(html.toString());

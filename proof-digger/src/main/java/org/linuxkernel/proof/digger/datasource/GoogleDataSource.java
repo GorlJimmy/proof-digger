@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import org.linuxkernel.proof.digger.files.FilesConfig;
 import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.model.Proof;
 import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
+//github.com/GorlJimmy/proof-digger
 import org.linuxkernel.proof.digger.util.MySQLUtils;
 import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
@@ -114,52 +114,55 @@ public class GoogleDataSource implements DataSource {
 	@Override
 	public Issue getAndAnswerQuestion(String questionStr, IssueSolutionSystem questionAnsweringSystem) {
 		// 1、先从本地缓存里面找
-		Issue question = MySQLUtils.getQuestionFromDatabase("google:", questionStr);
-		if (question != null) {
-			// 数据库中存在
-			_LOG.info("从数据库中查询到Question：" + question.getIssue());
-			// 回答问题
+		synchronized (this) {
+//			Issue question = MySQLUtils.getQuestionFromDatabase("google:", questionStr);
+//			if (question != null) {
+//				// 数据库中存在
+//				_LOG.info("从数据库中查询到Question：" + question.getIssue());
+//				// 回答问题
+//				if (questionAnsweringSystem != null) {
+//					questionAnsweringSystem.answerQuestion(question);
+//				}
+//				return question;
+//			}
+//			// 2、本地缓存里面没有再查询google
+			Issue	question = new Issue();
+			question.setIssue(questionStr);
+//
+			String query = "";
+//			try {
+//				query = URLEncoder.encode(question.getIssue(), "UTF-8");
+//			} catch (UnsupportedEncodingException e) {
+//				_LOG.error("url构造失败", e);
+//				return null;
+//			}
+			for (int i = 0; i < _PAGE; i++) {
+				query = "http://ajax.googleapis.com/ajax/services/search/web?start=" + i * _PAGESIZE + "&rsz=large&v=1.0&q=" + query;
+				List<Proof> evidences = search(query);
+				if (evidences.size() > 0) {
+					question.addEvidences(evidences);
+				} else {
+					_LOG.error("结果页 " + (i + 1) + " 没有搜索到结果");
+					break;
+				}
+			}
+			_LOG.info("Question：" + question.getIssue() + " 搜索到Evidence " + question.getEvidences().size() + " 条");
+			if (question.getEvidences().isEmpty()) {
+				return null;
+			}
+			// 3、将google查询结果加入本地缓存
+			if (question.getEvidences().size() > 7) {
+				_LOG.info("将Question：" + question.getIssue() + " 加入MySQL数据库");
+//				MySQLUtils.saveQuestionToDatabase("google:", question);
+			}
+			_searchTimes++;
+
 			if (questionAnsweringSystem != null) {
 				questionAnsweringSystem.answerQuestion(question);
 			}
 			return question;
 		}
-		// 2、本地缓存里面没有再查询google
-		question = new Issue();
-		question.setIssue(questionStr);
 
-		String query = "";
-		try {
-			query = URLEncoder.encode(question.getIssue(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			_LOG.error("url构造失败", e);
-			return null;
-		}
-		for (int i = 0; i < _PAGE; i++) {
-			query = "http://ajax.googleapis.com/ajax/services/search/web?start=" + i * _PAGESIZE + "&rsz=large&v=1.0&q=" + query;
-			List<Proof> evidences = search(query);
-			if (evidences.size() > 0) {
-				question.addEvidences(evidences);
-			} else {
-				_LOG.error("结果页 " + (i + 1) + " 没有搜索到结果");
-				break;
-			}
-		}
-		_LOG.info("Question：" + question.getIssue() + " 搜索到Evidence " + question.getEvidences().size() + " 条");
-		if (question.getEvidences().isEmpty()) {
-			return null;
-		}
-		// 3、将google查询结果加入本地缓存
-		if (question.getEvidences().size() > 7) {
-			_LOG.info("将Question：" + question.getIssue() + " 加入MySQL数据库");
-			MySQLUtils.saveQuestionToDatabase("google:", question);
-		}
-		_searchTimes++;
-
-		if (questionAnsweringSystem != null) {
-			questionAnsweringSystem.answerQuestion(question);
-		}
-		return question;
 	}
 
 	private List<Proof> search(String query) {

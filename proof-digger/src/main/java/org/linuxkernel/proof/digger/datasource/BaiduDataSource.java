@@ -124,18 +124,18 @@ public class BaiduDataSource implements DataSource {
 	@Override
 	public Issue getAndAnswerQuestion(String questionStr, IssueSolutionSystem questionAnsweringSystem) {
 		// 1、先从本地缓存里面找
-		Issue question = MySQLUtils.getQuestionFromDatabase("baidu:", questionStr);
-		if (question != null) {
-			// 数据库中存在
-			LOG.info("从数据库中查询到Question：" + question.getIssue());
-			// 回答问题
-			if (questionAnsweringSystem != null) {
-				questionAnsweringSystem.answerQuestion(question);
-			}
-			return question;
-		}
-		// 2、本地缓存里面没有再查询baidu
-		question = new Issue();
+//		Issue question = MySQLUtils.getQuestionFromDatabase("baidu:", questionStr);
+//		if (question != null) {
+//			// 数据库中存在
+//			LOG.info("从数据库中查询到Question：" + question.getIssue());
+//			// 回答问题
+//			if (questionAnsweringSystem != null) {
+//				questionAnsweringSystem.answerQuestion(question);
+//			}
+//			return question;
+//		}
+//		// 2、本地缓存里面没有再查询baidu
+		Issue question = new Issue();
 		question.setIssue(questionStr);
 
 		String query = "";
@@ -166,7 +166,7 @@ public class BaiduDataSource implements DataSource {
 		// 3、将baidu查询结果加入本地缓存
 		if (question.getEvidences().size() > 7) {
 			LOG.info("将Question：" + question.getIssue() + " 加入MySQL数据库");
-			MySQLUtils.saveQuestionToDatabase("baidu:", question);
+//			MySQLUtils.saveQuestionToDatabase("baidu:", question);
 		}
 
 		// 回答问题

@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author 杨尚川
  */
-public class CommonIssueSolutionSystem extends QuestionAnsweringSystemImpl {
+public class CommonIssueSolutionSystem extends IssueSolutionSystemImpl {
 
     private static final Logger LOG = LoggerFactory.getLogger(CommonIssueSolutionSystem.class);
 
