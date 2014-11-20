@@ -20,10 +20,11 @@ import org.linuxkernel.proof.digger.files.FilesConfig;
 import org.linuxkernel.proof.digger.model.Issue;
 import org.linuxkernel.proof.digger.model.Proof;
 import org.linuxkernel.proof.digger.system.IssueSolutionSystem;
-import org.linuxkernel.proof.digger.util.MySQLUtils;
-import org.linuxkernel.proof.digger.util.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+//github.com/GorlJimmy/proof-digger
+import org.linuxkernel.proof.digger.util.MySQLUtils;
+import org.linuxkernel.proof.digger.util.Tools;
 
 /**
  * search solution use google
